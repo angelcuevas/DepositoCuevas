@@ -64,5 +64,12 @@ namespace DepositoLibTesting
 
             Assert.NotNull(deposito);
         }
+
+        [Test]
+
+        public void notNullTest()
+        {
+            Assert.NotNull(1);
+        }
     }
 }
