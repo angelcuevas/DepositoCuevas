@@ -14,7 +14,7 @@ namespace DepositoServices
     public class SqliteDataAccess<T> where T : class
     {
 
-        private static string connectionString = @"Data Source=C:\Users\Pablo\source\repos\DepositoServices\deposito.db;Version=3;";
+        private static string connectionString = @"Data Source=.\deposito.db;Version=3;";
 
         private TableQueryInfo tableQueryInfo = TableQueryInfoFactory.getQueryInfo<T>();
 
