@@ -27,9 +27,9 @@ namespace DepositoServices.database
         {
             get { return "insert into ubicaciones_estados_juegos (ubicaciones_estados_id, juegos_id, cantidad) values (@Ubicaciones_estados_id, @Juegos_id, @Cantidad)"; }
         }
-        public override int getId(object juegos)
+        public override int getId(object ubicacionesEstadosJuegosDTO)
         {
-            return ((JuegoDTO)juegos).Id;
+            return ((JuegoDTO)ubicacionesEstadosJuegosDTO).Id;
         }
         public override string duclicityString
         {

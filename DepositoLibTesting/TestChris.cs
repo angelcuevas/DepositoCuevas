@@ -29,7 +29,7 @@ namespace DepositoLibTesting
             juego.Id = 12;
             juego.Codigo = "codigo 12";
             juego.Descripcion = "descripcion codigo 12";
-            Assert.NotNull (juego);
+            Assert.NotNull(juego);
         }
         [Test]
         public void instanciarUbicacionDTO()
@@ -42,6 +42,22 @@ namespace DepositoLibTesting
             ubicacion.Nombre = "Nombre";
             Assert.NotNull(ubicacion);
         }
-        
+        [Test]
+        public void instanciarUbicacionesEstadosDTO()
+        {
+            UbicacionesEstadosDTO ubicacionEstado = new UbicacionesEstadosDTO();
+            ubicacionEstado.Fecha = "2014-02-013";
+            ubicacionEstado.Movimiento_id = 1;
+            Assert.NotNull(ubicacionEstado);
+        }
+        [Test]
+        public void instanciarUbicacionesEstadosJuegosDTO()
+        {
+            UbicacionesEstadosJuegosDTO ubicacionEstadoJuego = new UbicacionesEstadosJuegosDTO();
+            ubicacionEstadoJuego.Ubicaciones_estados_id = 1;
+            ubicacionEstadoJuego.Juegos_id = 1;
+            ubicacionEstadoJuego.Cantidad = 1;
+            Assert.NotNull(ubicacionEstadoJuego);
+        }
     }
 }
