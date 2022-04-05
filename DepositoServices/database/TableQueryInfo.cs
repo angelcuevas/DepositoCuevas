@@ -6,7 +6,18 @@ namespace DepositoServices.database
 {
     public abstract class TableQueryInfo
     {
-        
+        abstract public string tableName
+        {
+            get;
+        }
+        abstract public string UpdateString
+        {
+            get;
+        }
+        abstract public string SelectOneString
+        {
+            get;
+        }
         abstract public string SelectString {
             get;
         }

@@ -9,9 +9,11 @@ namespace DepositoLib.DTO
         private int id;
         private string codigo;
         private string descripcion;
+        private int cantidad; 
 
         public int Id { get; set; }
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
+        public int Cantidad { get; set;  }
     }
 }

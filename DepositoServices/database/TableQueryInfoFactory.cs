@@ -1,4 +1,5 @@
 ﻿using DepositoLib.deposito;
+using DepositoLib.DTO;
 using DepositoLib.juegos;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,15 @@ namespace DepositoServices.database
             {
                 case var cls when cls == typeof(Ubicacion):
                     return new UbicacionTableQueryINfo();
-                case var cls when cls == typeof(Juego):
+                case var cls when cls == typeof(JuegoDTO):
                     return new JuegoTableQueryInfo();
-
+                case var cls when cls == typeof(MovimientoJuegoDTO):
+                    return new JuegoMovimientoTableQueryInfo();
+                case var cls when cls == typeof(MovimientoDTO):
+                    return new MovimientoTableQueryInfo();
 
                 default:
+                    Console.WriteLine("DEFAULT");
                     break;
             }
 

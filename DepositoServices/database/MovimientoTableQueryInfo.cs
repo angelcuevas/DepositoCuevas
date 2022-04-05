@@ -1,46 +1,45 @@
 ﻿using DepositoLib.DTO;
-using DepositoLib.juegos;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DepositoServices.database
 {
-    public class JuegoTableQueryInfo : TableQueryInfo
+    class MovimientoTableQueryInfo : TableQueryInfo
     {
         public override string tableName
         {
-            get { return "juegos"; }
-        }
-        public override string SelectOneString
-        {
-            get { return " Coidgo = @Codigo "; }
-        }
-        public override string SelectString
-        {
-            get { return "select * from juegos";  }
-        }
-        public override string InsertString
-        {
-            get { return "insert into juegos (codigo, descripcion, cantidad) values (@Codigo, @Descripcion, @Cantidad)"; }
+            get { return "movimientos"; }
         }
         public override string UpdateString
         {
-            get { return " update juegos set codigo = @Codigo, descripcion = @Descripcion, cantidad= @Cantidad "; }
+            get { return " Codigo = @Codigo "; }
+        }
+
+        public override string SelectOneString
+        {
+            get { return " Codigo = @Codigo "; }
+        }
+        public override string SelectString
+        {
+            get { return "select * from movimientos"; }
+        }
+        public override string InsertString
+        {
+            get { return "insert into movimientos (fecha, ubicacion_origen, ubicacion_destino, comentarios) values (@Fecha, @UbicacionOrigen,@UbicacionDestino,@Comentario)"; }
         }
         public override int getId(object juego)
         {
-            return ((JuegoDTO) juego).Id;
+            return ((MovimientoDTO)juego).Id;
         }
         public override string duclicityString
         {
-            get { return " codigo = @Codigo "; }
+            get { return ""; }
         }
         public override Dictionary<String, object> getDuplicityParameters(object obj)
         {
-            JuegoDTO juego = obj as JuegoDTO;
+            MovimientoDTO movimientoJuegoDTO = obj as MovimientoDTO;
             Dictionary<String, object> dictionary = new Dictionary<String, object>();
-            dictionary.Add("@Codigo", juego.Codigo);
 
             return dictionary;
         }

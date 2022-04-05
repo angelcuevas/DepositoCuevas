@@ -17,9 +17,5 @@ namespace DepositoLib.DTO
         public string Fila { get; set; }
         public string Columna { get; set; }
         public string Nombre { get; set; }
-
-        
-
-  
     }
 }

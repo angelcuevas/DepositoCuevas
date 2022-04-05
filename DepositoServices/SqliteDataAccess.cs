@@ -14,29 +14,69 @@ namespace DepositoServices
     public class SqliteDataAccess<T> where T : class
     {
 
-        private static string connectionString = @"Data Source=.\deposito.db;Version=3;";
+        private static string connectionString = @"Data Source=B:\PROJECTS\VISUAL STUDIO\DepositoCuevas\DepositoCuevas\deposito.db;Version=3;";
 
         private TableQueryInfo tableQueryInfo = TableQueryInfoFactory.getQueryInfo<T>();
 
         private T item; 
             
-        public List<T> getAll()
+        public List<T> getAll(string where = "")
         {
             using (IDbConnection cnn = new SQLiteConnection(connectionString))
-            {   
-                var output = cnn.Query<T>(tableQueryInfo.SelectString, new DynamicParameters());
+            {
+
+                string qry = tableQueryInfo.SelectString;
+                if(where != "")
+                {
+                    qry += " WHERE " + where; 
+                }
+
+                var output = cnn.Query<T>(qry, new DynamicParameters());
                 return output.AsList<T>();
             }
         }
-        public bool save(T item)
+
+        public T getOne(string where, DynamicParameters parameters)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                var output = cnn.Query<T>(tableQueryInfo.SelectString + " WHERE " + where, parameters);
+                return output.AsList<T>()[0];
+            }
+        }
+
+        public int getLastInsertedId(SQLiteConnection cnn)
+        {
+            
+            SQLiteCommand cmd = new SQLiteCommand();
+            cnn.Open();
+            cmd.Connection = (SQLiteConnection)cnn;
+            cmd.CommandText = "select seq from sqlite_sequence where name = '"+ tableQueryInfo.tableName+"'";
+            Int64 LastRowID64 = (Int64)cmd.ExecuteScalar();
+            return (int)LastRowID64;
+        }
+
+        public int save(T item)
         {
             using (IDbConnection cnn = new SQLiteConnection(connectionString))
             {
                 if (doesItExistsAlready(item))
                 {
-                    return false; 
+                    return -1; 
                 }
                 cnn.Execute(tableQueryInfo.InsertString, item);
+                
+                return getLastInsertedId((SQLiteConnection)cnn);
+            }
+        }
+
+        public bool update(T item, string where)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                
+                cnn.Execute(tableQueryInfo.UpdateString + " WHERE " + where , item);
+                Console.WriteLine("x " + tableQueryInfo.UpdateString + " WHERE " + where);
                 return true;
             }
         }
@@ -63,12 +103,8 @@ namespace DepositoServices
                     parameters.Add(propiedad.Key, propiedad.Value);
                 }
 
-
-
                 return cnn.Query<T>(tableQueryInfo.SelectString + " WHERE " + tableQueryInfo.duclicityString, parameters);
             }
-
-
 
             return cnn.Query<T>(tableQueryInfo.SelectString + " where id = " + tableQueryInfo.getId(item), new DynamicParameters());
         }

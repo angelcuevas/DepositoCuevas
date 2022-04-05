@@ -1,5 +1,6 @@
 using DepositoLib;
 using DepositoLib.deposito;
+using DepositoLib.DTO;
 using DepositoLib.juegos;
 using DepositoServices;
 using NUnit.Framework;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 
 namespace DepositoLibTesting
 {
-    public class Tests
+    public class Deposito
     {
         [SetUp]
         public void Setup()
@@ -24,11 +25,11 @@ namespace DepositoLibTesting
         [Test]
         public void GuardarJuego()
         {
-            Juego juego = new Juego() { Codigo = "4050", Descripcion="No se repite"};
+            JuegoDTO juego = new JuegoDTO() { Codigo = "4050", Descripcion="No se repite"};
 
-            SqliteDataAccess<Juego> dataAccess = new SqliteDataAccess<Juego>();
+            SqliteDataAccess<JuegoDTO> dataAccess = new SqliteDataAccess<JuegoDTO>();
             dataAccess.save(juego);
-            List<Juego> juegos = dataAccess.getAll();
+            List<JuegoDTO> juegos = dataAccess.getAll();
             
             Assert.AreEqual(juego.Codigo, juegos.Find((j)=> j.Codigo == juego.Codigo).Codigo);
         }

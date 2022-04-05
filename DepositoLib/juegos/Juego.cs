@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DepositoLib.DTO;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,21 +7,25 @@ namespace DepositoLib.juegos
 {
     public class Juego
     {
-        private int id; 
-        private string codigo;
-        private string descripcion; 
+        private JuegoDTO juego;
+        
+        public Juego(JuegoDTO juego)
+        {
+            this.juego = juego; 
+        }
 
-        public int Id
+        public JuegoDTO getJuego()
         {
-            get;set; 
+            return this.juego;
         }
-        public string Codigo
+
+        public int getCantidad()
         {
-            get;set;
+            return this.juego.Cantidad;
         }
-        public string Descripcion
+        public void setCantidad(int cantidad)
         {
-            get;set;
+            this.juego.Cantidad = cantidad;
         }
     }
 }

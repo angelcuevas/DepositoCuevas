@@ -6,7 +6,20 @@ using System.Text;
 namespace DepositoServices.database
 {
     class UbicacionTableQueryINfo : TableQueryInfo
-    {  
+    {
+
+        public override string tableName
+        {
+            get { return "ubicaciones"; }
+        }
+        public override string UpdateString
+        {
+            get { return " Coidgo = @Codigo "; }
+        }
+        public override string SelectOneString
+        {
+            get { return " Coidgo = @Codigo "; }
+        }
         public override string SelectString
         {
             get { return "select * from ubicaciones"; }

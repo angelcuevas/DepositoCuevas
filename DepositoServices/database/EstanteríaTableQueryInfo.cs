@@ -7,6 +7,18 @@ namespace DepositoServices.database
 {
     public class EstanteríaTableQueryInfo : TableQueryInfo
     {
+        public override string tableName
+        {
+            get { return "estanterias"; }
+        }
+        public override string UpdateString
+        {
+            get { return " Coidgo = @Codigo "; }
+        }
+        public override string SelectOneString
+        {
+            get { return " Coidgo = @Codigo "; }
+        }
         public override string SelectString
         {
             get { return "select * from estanterias"; }

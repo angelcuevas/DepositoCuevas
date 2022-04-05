@@ -9,12 +9,8 @@ namespace DepositoLib.DTO
         private int id;
         private string nombre;
 
-
         public int Id { get; set; }
         public string Nombre { get; set; }
-
-
-
     }
 
 }
