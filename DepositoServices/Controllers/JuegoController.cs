@@ -41,7 +41,7 @@ namespace DepositoLib.Controllers
         }
         public static int crearMovimiento(int ubicacionOrigen, int ubicacionDestino)
         {
-            MovimientoDTO movimiento = new MovimientoDTO() {Fecha = new DateTime(), UbicacionOrigen = ubicacionDestino, UbicacionDestino = ubicacionDestino, Comentario = ""  } ;
+            MovimientoDTO movimiento = new MovimientoDTO() {Fecha = DateTime.Now.ToLocalTime(), UbicacionOrigen = ubicacionDestino, UbicacionDestino = ubicacionDestino, Comentario = ""  } ;
             return movimientoDataAccess.save(movimiento);
         }
         public static MovimientoJuegoDTO crearNuevoMovimiento(Juego juego, int cantidad)
@@ -51,7 +51,7 @@ namespace DepositoLib.Controllers
             MovimientoJuegoDTO movimiento = new MovimientoJuegoDTO();
             int id = crearMovimiento(0, 9);
 
-            movimiento.MovimientoId = 
+            movimiento.MovimientoId = id;
             movimiento.JuegoId = juego.getJuego().Id;
             
             if(lista.Count > 0)

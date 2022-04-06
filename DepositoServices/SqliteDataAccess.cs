@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Linq;
 using System.Text;
 
 
@@ -104,6 +105,11 @@ namespace DepositoServices
                 }
 
                 return cnn.Query<T>(tableQueryInfo.SelectString + " WHERE " + tableQueryInfo.duclicityString, parameters);
+            }
+
+            if (tableQueryInfo.getId(item) == 0)
+            {
+                return Enumerable.Empty<T>();
             }
 
             return cnn.Query<T>(tableQueryInfo.SelectString + " where id = " + tableQueryInfo.getId(item), new DynamicParameters());
