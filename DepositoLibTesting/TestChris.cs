@@ -2,12 +2,30 @@
 using System.Collections.Generic;
 using System.Text;
 using DepositoLib.DTO;
+using DepositoServices.Controllers;
 using NUnit.Framework;
 
 namespace DepositoLibTesting
 {
     class TestChris
     {
+        UbicacionesEstadosJuegosDTO ubicacionEstadoJuego;
+
+        [SetUp]
+        public void Setup()
+        {
+            try
+            {
+                
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
         [Test]
         public void primero()
         {
@@ -53,11 +71,21 @@ namespace DepositoLibTesting
         [Test]
         public void instanciarUbicacionesEstadosJuegosDTO()
         {
-            UbicacionesEstadosJuegosDTO ubicacionEstadoJuego = new UbicacionesEstadosJuegosDTO();
+            ubicacionEstadoJuego = new UbicacionesEstadosJuegosDTO();
             ubicacionEstadoJuego.Ubicaciones_estados_id = 1;
             ubicacionEstadoJuego.Juegos_id = 1;
             ubicacionEstadoJuego.Cantidad = 1;
             Assert.NotNull(ubicacionEstadoJuego);
+        }
+
+        [Test]
+        public void GuardarUbicacionEstadoJuegoEnBase()
+
+        {
+            this.ubicacionEstadoJuego = new UbicacionesEstadosJuegosDTO() { Ubicaciones_estados_id = 1, Juegos_id = 1, Cantidad = 201 };
+            this.ubicacionEstadoJuego = UbicacionController.saveAndGet(ubicacionEstadoJuego);
+
+
         }
     }
 }
