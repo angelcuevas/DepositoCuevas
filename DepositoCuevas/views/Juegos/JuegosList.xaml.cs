@@ -1,4 +1,5 @@
 ﻿using DepositoCuevas.viewmodels.Juegos;
+using DepositoCuevas.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,15 @@ namespace DepositoCuevas.views.Juegos
         {
             InitializeComponent();
             this.DataContext = viewModel;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            JuegoForm formulario = new JuegoForm();
+
+            formulario.Owner = Application.Current.MainWindow;
+            formulario.Show();
+            
         }
     }
 }

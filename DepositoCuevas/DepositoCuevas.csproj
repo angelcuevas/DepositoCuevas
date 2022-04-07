@@ -85,6 +85,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AnotherCommandImplementation.cs" />
     <Compile Include="interfaces\PropertyChangedNotifier.cs" />
     <Compile Include="viewmodels\Juegos\JuegosListViewModel.cs" />
     <Compile Include="viewmodels\MainWindowViewModel.cs" />
@@ -96,6 +97,12 @@
     </Compile>
     <Compile Include="views\menu\Navigation_Drawer.xaml.cs">
       <DependentUpon>Navigation_Drawer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\SampleDialog.xaml.cs">
+      <DependentUpon>SampleDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\JuegoForm.xaml.cs">
+      <DependentUpon>JuegoForm.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -118,6 +125,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\menu\Navigation_Drawer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\SampleDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\JuegoForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

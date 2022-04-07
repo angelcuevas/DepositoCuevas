@@ -17,8 +17,23 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
-    <Grid>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <!--DialogClosing="Sample1_DialogHost_OnDialogClosing"-->
+    <!--<materialDesign:DialogHost
+                    
+                    DialogTheme="Inherit">
+        <materialDesign:DialogHost.DialogContent>-->
+            <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -28,13 +43,26 @@
               Width="300"
               ToolTip="Resource name: MaterialDesignRaisedLightButton"
               Content="Crear Juego Nuevo"
+                
               IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 
               HorizontalAlignment="left" Cursor="Hand"
-                Margin="0 20 0 40"
+                Margin="0 20 0 40" Click="Button_Click"
+                
                 />
-
+        <StackPanel Grid.Row="1"
+          VerticalAlignment="Center">
+            <Button
+            Command="{Binding RunDialogCommand}"
+            Width="128"
+            Content="RUN CODE" />
+            <Button
+            Command="{Binding RunExtendedDialogCommand}"
+            Width="128"
+            Margin="0 32 0 0"
+            Content="EXTENDED" />
+        </StackPanel>
         <DataGrid
-                Grid.Row="1"
+                Grid.Row="2"
                 ItemsSource="{Binding Lista}"
                 CanUserAddRows="False" AutoGenerateColumns="False"
                 HeadersVisibility="All"
@@ -167,4 +195,6 @@
         </DataGrid>
 
     </Grid>
+            <!--</materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>-->
 </UserControl>

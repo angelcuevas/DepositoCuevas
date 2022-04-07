@@ -25,51 +25,51 @@ namespace DepositoLibTesting
                 Console.WriteLine(e.Message);
             }
         }
-        //[Test]
-        //public void getCantidad()
-        //{
-        //    try
-        //    {
-        //        Juego miJuego = JuegoController.getOne("4050");
-        //        Console.WriteLine(miJuego.getJuego().Descripcion + " cantidad " + miJuego.getCantidad());
-        //        Assert.GreaterOrEqual(miJuego.getCantidad(), 0);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        Assert.False(false);
-        //    }
+        [Test]
+        public void getCantidad()
+        {
+            try
+            {
+                Juego miJuego = JuegoController.getOne("4050");
+                Console.WriteLine(miJuego.getJuego().Descripcion + " cantidad " + miJuego.getCantidad());
+                Assert.GreaterOrEqual(miJuego.getCantidad(), 0);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Assert.False(false);
+            }
 
-        //}
-        //[Test]
-        //public void actualizarCantidadDeFormaDirecta()
-        //{
-        //    int cantidadOriginal = juego.getJuego().Cantidad;
-        //    juego.getJuego().Cantidad++;
-        //    juego.getJuego().Descripcion = "cambie";
+        }
+        [Test]
+        public void actualizarCantidadDeFormaDirecta()
+        {
+            int cantidadOriginal = juego.getJuego().Cantidad;
+            juego.getJuego().Cantidad++;
+            juego.getJuego().Descripcion = "cambie";
 
-        //    Console.WriteLine("id " + juego.getJuego().Id);
-        //    Console.WriteLine("cantidadOriginal " + cantidadOriginal);
-        //    try
-        //    {
-        //        Juego juegoCambiado = JuegoController.update(juego);
-        //        Assert.AreNotEqual(cantidadOriginal, juegoCambiado.getCantidad());
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        Assert.False(false);
-        //    }
-        //}
+            Console.WriteLine("id " + juego.getJuego().Id);
+            Console.WriteLine("cantidadOriginal " + cantidadOriginal);
+            try
+            {
+                Juego juegoCambiado = JuegoController.update(juego);
+                Assert.AreNotEqual(cantidadOriginal, juegoCambiado.getCantidad());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Assert.False(false);
+            }
+        }
 
-        //[Test]
-        //public void agregarMovimientoRandom()
-        //{
-        //    Random rnd = new Random();
+        [Test]
+        public void agregarMovimientoRandom()
+        {
+            Random rnd = new Random();
 
-        //    Juego juegoModificado = JuegoController.addMovimiento(juego, rnd.Next(5, 200));
+            Juego juegoModificado = JuegoController.addMovimiento(juego, rnd.Next(5, 200));
 
-        //    Assert.GreaterOrEqual(juegoModificado.getCantidad(), juego.getCantidad());
-        //}
+            Assert.GreaterOrEqual(juegoModificado.getCantidad(), juego.getCantidad());
+        }
     }
 }

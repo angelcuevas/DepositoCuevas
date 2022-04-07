@@ -50,7 +50,7 @@ namespace DepositoServicesLibrary
         {
             
             SQLiteCommand cmd = new SQLiteCommand();
-            cnn.Open();
+            //cnn.Open();
             cmd.Connection = (SQLiteConnection)cnn;
             cmd.CommandText = "select seq from sqlite_sequence where name = '"+ tableQueryInfo.tableName+"'";
             Int64 LastRowID64 = (Int64)cmd.ExecuteScalar();
