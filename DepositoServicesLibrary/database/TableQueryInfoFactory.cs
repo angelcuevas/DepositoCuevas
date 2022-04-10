@@ -21,6 +21,10 @@ namespace DepositoServicesLibrary.database
                     return new JuegoMovimientoTableQueryInfo();
                 case var cls when cls == typeof(MovimientoDTO):
                     return new MovimientoTableQueryInfo();
+                case var cls when cls == typeof(UbicacionesEstadosDTO):
+                    return new UbicacionesEstadosTableQueryInfo();
+                case var cls when cls == typeof(UbicacionesEstadosJuegosDTO):
+                    return new UbicacionesEstadosJuegosTableQueryInfo();
 
                 default:
                     Console.WriteLine("DEFAULT");

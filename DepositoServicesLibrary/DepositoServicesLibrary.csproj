@@ -34,6 +34,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\DepositoCuevas\packages\Dapper.2.0.123\lib\net461\Dapper.dll</HintPath>
@@ -92,12 +110,15 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Controllers\JuegoController.cs" />
+    <Compile Include="Controllers\UbicacionController.cs" />
     <Compile Include="database\EstanteríaTableQueryInfo.cs" />
     <Compile Include="database\JuegoMovimientoTableQueryInfo.cs" />
     <Compile Include="database\JuegoTableQueryInfo.cs" />
     <Compile Include="database\MovimientoTableQueryInfo.cs" />
     <Compile Include="database\TableQueryInfo.cs" />
     <Compile Include="database\TableQueryInfoFactory.cs" />
+    <Compile Include="database\UbicacionesEstadosJuegosTableQueryInfo.cs" />
+    <Compile Include="database\UbicacionesEstadosTableQueryInfo.cs" />
     <Compile Include="database\UbicacionTableQueryINfo.cs" />
     <Compile Include="DepositoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

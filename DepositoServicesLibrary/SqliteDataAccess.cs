@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 
@@ -14,11 +15,12 @@ namespace DepositoServicesLibrary
     public class SqliteDataAccess<T> where T : class
     {
 
-        private static string connectionString = @"Data Source=B:\PROJECTS\VISUAL STUDIO\DepositoCuevas\DepositoCuevas\deposito.db;Version=3;";
+        private static string connectionString = @"Data Source=C:\Users\crysi\Desktop\Nuevacarpeta\DepositoCuevas\DepositoCuevas\deposito.db;Version=3";
 
         private TableQueryInfo tableQueryInfo = TableQueryInfoFactory.getQueryInfo<T>();
 
-        private T item; 
+        private T item;
+        private int existingId;
             
         public List<T> getAll(string where = "")
         {
@@ -42,6 +44,10 @@ namespace DepositoServicesLibrary
             using (IDbConnection cnn = new SQLiteConnection(connectionString))
             {
                 var output = cnn.Query<T>(tableQueryInfo.SelectString + " WHERE " + where, parameters);
+                if(output.AsList<T>().Count == 0)
+                {
+                    return null;
+                }
                 return output.AsList<T>()[0];
             }
         }
@@ -65,6 +71,13 @@ namespace DepositoServicesLibrary
 
                 if (doesItExistsAlready(item))
                 {
+                    if (existingId > 0)
+                    {
+                        int result = existingId;
+                        existingId = 0;
+                        return result;
+
+                    }
                     return -1; 
                 }
                 cnn.Execute(tableQueryInfo.InsertString, item);
@@ -90,6 +103,13 @@ namespace DepositoServicesLibrary
             using (IDbConnection cnn = new SQLiteConnection(connectionString))
             {
                 IEnumerable<T> output = getQueryResult(cnn);
+
+                if(output.AsList<T>().Count > 0)
+                {
+                    Type t = output.AsList<T>()[0].GetType();
+                    PropertyInfo prop = t.GetProperty("Id");
+                    existingId = (int)prop.GetValue(output.AsList<T>()[0]);
+                }
                 return output.AsList<T>().Count > 0;
             }
         }
