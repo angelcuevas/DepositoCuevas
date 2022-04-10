@@ -1,7 +1,4 @@
-﻿using DepositoClassLibrary.juegos;
-using DepositoCuevas.viewmodels.Juegos;
-using DepositoCuevas.Windows;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,24 +16,13 @@ using System.Windows.Shapes;
 namespace DepositoCuevas.views.Juegos
 {
     /// <summary>
-    /// Lógica de interacción para JuegosList.xaml
+    /// Lógica de interacción para NewJuegoForm.xaml
     /// </summary>
-    public partial class JuegosList : UserControl
+    public partial class NewJuegoForm : UserControl
     {
-        //JuegosListViewModel viewModel = new JuegosListViewModel(); 
-        public JuegosList()
+        public NewJuegoForm()
         {
             InitializeComponent();
-            //this.DataContext = viewModel;
-
-            //viewModel.GoToJuegoPage += onJuegoPage;
-        }
-
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DepositoClassLibrary.juegos;
+using DepositoCuevas.viewmodels.Juegos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,6 +12,12 @@ namespace DepositoCuevas.viewmodels
     internal class MainWindowViewModel : INotifyPropertyChanged
     {
         private String fecha ;
+        private JuegosListViewModel juegoListViewModel = new JuegosListViewModel(); 
+
+        public JuegosListViewModel JuegoListViewModel
+        {
+            get { return juegoListViewModel; }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,6 +47,15 @@ namespace DepositoCuevas.viewmodels
         public MainWindowViewModel()
         {
             this.Fecha = DateTime.Now.ToString("D");
+
+            juegoListViewModel.GoToJuegoPage += onJuegoPage;
+        }
+
+        public void onJuegoPage(Juego juego)
+        {
+            Console.WriteLine("LCDTM " + juego.getJuego().Descripcion);
+
+            
         }
     }
 }

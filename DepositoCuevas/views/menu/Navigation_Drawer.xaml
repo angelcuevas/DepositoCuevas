@@ -23,10 +23,36 @@
         <System:Double x:Key="iconSize">30</System:Double>
     </UserControl.Resources>
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"> 
-        
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="auto"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <materialDesign:Card
+            Grid.ZIndex="1"
+            Grid.Row="1"
+              Background="{DynamicResource SecondaryHueLightBrush}"
+              Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+              Width="500"
+              Height="100"
+              Padding="8"
+              VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Margin="20"
+                Visibility="Hidden"
+              >
+                
+                    <TextBlock
+                FontSize="16"
+                        TextAlignment="Center"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+
+                Text="Boring Text" />
+            
+        </materialDesign:Card>  
         <!--<materialDesign:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
-            <TabControl
+            <TabControl Grid.Row="1"
                         materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
                         SnapsToDevicePixels="True"
                         Style="{StaticResource MaterialDesignNavigationRailTabControl}"
@@ -50,21 +76,26 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <StackPanel Margin="16">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
                         <TextBlock
-                                    FontSize="30"
-                                    Margin="0,0,0,8"
-                                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                                    Text="Lista de Juegos" />
+                            Grid.Row="0"
+                            FontSize="30"
+                            Margin="0,0,0,8"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Text="Lista de Juegos" />
 
-                        <TextBlock>
-                                    <Run Text="Lista de juegos terminados con sus cantidades registradas." />
-                                    <LineBreak />
-                                    <LineBreak />
-
-                        </TextBlock>
-                        <juegos:JuegosList />
-                </StackPanel>
+                    <TextBlock Grid.Row="1">
+                        <Run Text="Lista de juegos terminados con sus cantidades registradas." />
+                        <LineBreak />
+                        <LineBreak />
+                    </TextBlock>
+                    <juegos:JuegosList Grid.Row="2" DataContext="{Binding Path= DataContext.JuegoListViewModel, RelativeSource= {RelativeSource AncestorType=Window}   }" />
+                </Grid>
                 </TabItem>
 
             <TabItem Width="auto">

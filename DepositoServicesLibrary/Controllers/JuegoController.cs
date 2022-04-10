@@ -15,9 +15,15 @@ namespace DepositoServicesLibrary.Controllers
         private static SqliteDataAccess<MovimientoJuegoDTO> movimientoJuegoDataAccess = new SqliteDataAccess<MovimientoJuegoDTO>();
         private static SqliteDataAccess<MovimientoDTO> movimientoDataAccess = new SqliteDataAccess<MovimientoDTO>();
         
-        public static List<Juego> getAll()
+        public static string createWhereString(string where)
         {
-            List<Juego> lista = dataAccess.getAll().ConvertAll(j => new Juego(j));
+            if (where == "") return "";
+
+            return " codigo like '%" + where + "%' OR  descripcion like '%" + where + "%' ";
+        }
+        public static List<Juego> getAll(string where  = "")
+        {
+            List<Juego> lista = dataAccess.getAll(createWhereString(where)).ConvertAll(j => new Juego(j));
             return lista; 
         }
 

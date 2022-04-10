@@ -24,13 +24,13 @@ namespace DepositoClassLibrary.DTO
 
 
         private int id;
-        private string codigo;
-        private string descripcion;
+        private string codigo = "";
+        private string descripcion = "";
         private int cantidad; 
 
         public int Id { get; set; }
-        public string Codigo { get; set; }
-        public string Descripcion { get; set; }
+        public string Codigo { get { return this.codigo; } set { this.codigo = value; } }
+        public string Descripcion { get { return this.descripcion; } set { this.descripcion = value; } }
         public int Cantidad { get; set;  }
     }
 }
