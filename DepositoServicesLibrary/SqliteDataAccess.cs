@@ -9,19 +9,27 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-
 namespace DepositoServicesLibrary
 {
     public class SqliteDataAccess<T> where T : class
     {
 
-        private static string connectionString = @"Data Source=C:\Users\crysi\Desktop\Nuevacarpeta\DepositoCuevas\DepositoCuevas\deposito.db;Version=3";
+        private static string connectionString;
 
         private TableQueryInfo tableQueryInfo = TableQueryInfoFactory.getQueryInfo<T>();
 
         private T item;
         private int existingId;
-            
+
+        static SqliteDataAccess()
+        {
+
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string path = (System.IO.Path.GetDirectoryName(executable));
+            string absolutePath = path + "\\deposito.db";
+            connectionString = string.Format("Data Source={0};Version=3", absolutePath);
+
+        }
         public List<T> getAll(string where = "")
         {
             
