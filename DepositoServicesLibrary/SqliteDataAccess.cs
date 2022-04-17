@@ -30,6 +30,15 @@ namespace DepositoServicesLibrary
             connectionString = string.Format("Data Source={0};Version=3", absolutePath);
 
         }
+
+        public static List<T> query(string qry)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                var output = cnn.Query<T>(qry, new DynamicParameters());
+                return output.AsList<T>();
+            }
+        }
         public List<T> getAll(string where = "")
         {
             

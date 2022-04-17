@@ -71,5 +71,13 @@ namespace DepositoLibTesting
 
             Assert.GreaterOrEqual(juegoModificado.getCantidad(), juego.getCantidad());
         }
+
+        [Test]
+        public void InstanciarMovimientoJuego()
+        {
+            List<MovimientoJuego> lista = JuegoController.getMovimientosTest(juego);
+            Console.WriteLine("COUNT " + lista.Count);
+            Assert.Greater(lista.Count, 0);
+        }
     }
 }

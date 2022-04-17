@@ -65,6 +65,7 @@
     <Compile Include="deposito\Estante.cs" />
     <Compile Include="deposito\Estanteria.cs" />
     <Compile Include="deposito\Ubicacion.cs" />
+    <Compile Include="DTOscombinados\Movimiento.cs" />
     <Compile Include="DTO\EstanteriaDTO.cs" />
     <Compile Include="DTO\JuegoDTO.cs" />
     <Compile Include="DTO\MovimientoDTO.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="DTO\UbicacionesEstadosDTO.cs" />
     <Compile Include="DTO\UbicacionesEstadosJuegosDTO.cs" />
     <Compile Include="juegos\Juego.cs" />
+    <Compile Include="juegos\MovimientoJuego.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

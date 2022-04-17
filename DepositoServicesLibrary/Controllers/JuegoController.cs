@@ -6,6 +6,10 @@ using DepositoServicesLibrary;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Slapper;
+using System.Linq;
+using System.Reflection;
+using DepositoClassLibrary.DTOscombinados;
 
 namespace DepositoServicesLibrary.Controllers
 {
@@ -92,6 +96,34 @@ namespace DepositoServicesLibrary.Controllers
 
         public static List<MovimientoJuegoDTO> getMovimientos(Juego juego ) {
             return movimientoJuegoDataAccess.getAll(" juego_id = " + juego.getJuego().Id);
+        }
+
+        public static Dictionary<String, object> processFila(object o)
+        {
+            return o.GetType()
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .ToDictionary(prop => prop.Name, prop => prop.GetValue(o, null));
+        }
+        public static List<MovimientoJuego> getMovimientosTest(Juego juego)
+        {
+            //Slapper.AutoMapper.Map<Customer>(list);
+            List<Movimiento> lista = SqliteDataAccess<Movimiento>.query("SELECT mj.id as movimientoJuegoId, mj.*, j.* from movimientos_juego as mj LEFT JOIN juegos as j ON j.id = mj.juego_id where j.codigo = " + juego.getJuego().Codigo);
+
+            //List<MovimientoJuego> movimientos = lista.Find(l => new MovimientoJuego()
+            //{
+            //    JuegoDTO = new JuegoDTO()
+            //    {
+            //        Id = l.JuegoId,
+            //        Cantidad = l.JuegoCantidad,
+            //        Descripcion = l.Descripcion
+            //    },
+            //    MovimientoJuegoDTO = new MovimientoJuegoDTO()
+            //    {
+
+            //    }
+            //});
+
+            return new List<MovimientoJuego>();
         }
     }
 }
