@@ -89,5 +89,9 @@ namespace DepositoServicesLibrary.Controllers
 
             return update(juego);
         }
+
+        public static List<MovimientoJuegoDTO> getMovimientos(Juego juego ) {
+            return movimientoJuegoDataAccess.getAll(" juego_id = " + juego.getJuego().Id);
+        }
     }
 }

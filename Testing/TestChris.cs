@@ -85,8 +85,9 @@ namespace DepositoLibTesting
                 this.ubicacionEstadoJuego = UbicacionController.saveAndGet(ubicacionEstadoJuego);
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 Assert.NotNull(null);
             }
         }

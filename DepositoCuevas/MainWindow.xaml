@@ -29,7 +29,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <menu:ColorZone Grid.Row="0"/>
-            <menu:Navigation_Drawer  Grid.Row="1" DataContext="{Binding Path=DataContext}"/>
+            <menu:Navigation_Drawer x:Name="navigationDrawer"  Grid.Row="1" DataContext="{Binding Path=DataContext}"/>
         
         </Grid>
     </materialDesign:DialogHost>

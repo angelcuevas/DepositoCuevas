@@ -23,7 +23,7 @@ namespace DepositoServicesLibrary
 
         static SqliteDataAccess()
         {
-
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
             string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string path = (System.IO.Path.GetDirectoryName(executable));
             string absolutePath = path + "\\deposito.db";

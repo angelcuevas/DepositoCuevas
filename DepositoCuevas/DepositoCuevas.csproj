@@ -177,11 +177,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\ViewsVisivility.cs" />
     <Compile Include="Commands\ActionCommand .cs" />
     <Compile Include="Commands\AnotherCommandImplementation.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="interfaces\PropertyChangedNotifier.cs" />
     <Compile Include="viewmodels\Juegos\JuegosListViewModel.cs" />
+    <Compile Include="viewmodels\Juegos\JuegosPageViewModel.cs" />
     <Compile Include="viewmodels\MainWindowViewModel.cs" />
     <Compile Include="views\common\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
@@ -219,6 +221,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="views\common\Loading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

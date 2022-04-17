@@ -1,4 +1,5 @@
-﻿using DepositoCuevas.viewmodels;
+﻿using DepositoClassLibrary.juegos;
+using DepositoCuevas.viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,15 @@ namespace DepositoCuevas
         {
             InitializeComponent();
             this.DataContext = viewModel;
+
+            viewModel.GoToJuegoPage += onJuegoPage;
+        }
+
+        public void onJuegoPage(Juego juego)
+        {
+            //Console.WriteLine("LCDTM " + juego.getJuego().Descripcion);            
+            TabControl myTabControl = navigationDrawer.FindName("mainTabControl") as TabControl;
+            myTabControl.SelectedIndex = 2;
         }
     }
 }

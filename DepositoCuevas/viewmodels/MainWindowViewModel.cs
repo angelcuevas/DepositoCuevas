@@ -1,4 +1,5 @@
 ﻿using DepositoClassLibrary.juegos;
+using DepositoCuevas.classes;
 using DepositoCuevas.viewmodels.Juegos;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,28 @@ using System.Threading.Tasks;
 
 namespace DepositoCuevas.viewmodels
 {
+    public delegate void Notify(Juego juego);  // delegate
     internal class MainWindowViewModel : INotifyPropertyChanged
     {
         private String fecha ;
-        private JuegosListViewModel juegoListViewModel = new JuegosListViewModel(); 
+        private JuegosListViewModel juegoListViewModel = new JuegosListViewModel();
+        private JuegosPageViewModel juegosPageViewModel;
+        public JuegosPageViewModel JuegosPageViewModel
+        {
+            get { return juegosPageViewModel; }
+            set { juegosPageViewModel = value; NotifyPropertyChanged("JuegosPageViewModel"); }
+        }
+
+        public event Notify GoToJuegoPage; // event
+
+        private ViewsVisivility viewsVisibility = new ViewsVisivility();
+
+        public ViewsVisivility ViewsVisibility
+        {
+            get { return viewsVisibility; }
+            set { viewsVisibility = value; }
+        }
+
 
         public JuegosListViewModel JuegoListViewModel
         {
@@ -53,9 +72,21 @@ namespace DepositoCuevas.viewmodels
 
         public void onJuegoPage(Juego juego)
         {
-            Console.WriteLine("LCDTM " + juego.getJuego().Descripcion);
+            //Console.WriteLine("LCDTM " + juego.getJuego().Descripcion);
+            //GoToJuegoPage?.Invoke(juego);
+            JuegosPageViewModel = new JuegosPageViewModel(juego);
 
-            
+            JuegosPageViewModel.GoBack += goBackToJuegosListPage;
+
+            ViewsVisibility.JuegosList = System.Windows.Visibility.Collapsed;
+            ViewsVisibility.JuegosPage = System.Windows.Visibility.Visible;
+
+        }
+
+        public void goBackToJuegosListPage()
+        {
+            ViewsVisibility.JuegosList = System.Windows.Visibility.Visible;
+            ViewsVisibility.JuegosPage = System.Windows.Visibility.Collapsed;
         }
     }
 }

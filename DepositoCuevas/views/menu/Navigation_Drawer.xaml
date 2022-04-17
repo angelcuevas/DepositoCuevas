@@ -53,6 +53,7 @@
         </materialDesign:Card>  
         <!--<materialDesign:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
             <TabControl Grid.Row="1"
+                        Name="mainTabControl"
                         materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
                         SnapsToDevicePixels="True"
                         Style="{StaticResource MaterialDesignNavigationRailTabControl}"
@@ -82,19 +83,18 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                        <TextBlock
-                            Grid.Row="0"
-                            FontSize="30"
-                            Margin="0,0,0,8"
-                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                            Text="Lista de Juegos" />
-
-                    <TextBlock Grid.Row="1">
-                        <Run Text="Lista de juegos terminados con sus cantidades registradas." />
-                        <LineBreak />
-                        <LineBreak />
-                    </TextBlock>
-                    <juegos:JuegosList Grid.Row="2" DataContext="{Binding Path= DataContext.JuegoListViewModel, RelativeSource= {RelativeSource AncestorType=Window}   }" />
+            
+                    <juegos:JuegosList
+                        Grid.Row="2" 
+                        Visibility="{Binding Path=DataContext.ViewsVisibility.JuegosList, RelativeSource= {RelativeSource AncestorType=Window}}" 
+                        DataContext="{Binding Path= DataContext.JuegoListViewModel, RelativeSource= {RelativeSource AncestorType=Window}}" 
+                                       
+                        />
+                    <juegos:JuegoPage 
+                       Grid.Row="2"
+                       Visibility="{Binding Path=DataContext.ViewsVisibility.JuegosPage, RelativeSource= {RelativeSource AncestorType=Window}}" 
+                       DataContext="{Binding Path= DataContext.JuegosPageViewModel, RelativeSource= {RelativeSource AncestorType=Window}}" 
+                    />
                 </Grid>
                 </TabItem>
 
