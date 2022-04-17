@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 
 DepositoCuevas/deposito.db
+
+deposito.db
