@@ -26,9 +26,9 @@ namespace DepositoCuevas.viewmodels.Juegos
 
         public event NotifyGoBack GoBack; // event
 
-        private ObservableCollection<MovimientoJuegoDTO> movimientos = new ObservableCollection<MovimientoJuegoDTO>(); 
+        private ObservableCollection<MovimientoJuego> movimientos = new ObservableCollection<MovimientoJuego>(); 
         
-        public ObservableCollection<MovimientoJuegoDTO> Movimientos
+        public ObservableCollection<MovimientoJuego> Movimientos
         {
             get {  return movimientos;}
             set { movimientos = value; NotifyPropertyChanged("Movimientos"); }
@@ -76,7 +76,9 @@ namespace DepositoCuevas.viewmodels.Juegos
         
         private void fetchMovimientos()
         {
-            Movimientos = new ObservableCollection<MovimientoJuegoDTO>(JuegoController.getMovimientos(juego));
+            //Movimientos = new ObservableCollection<MovimientoJuegoDTO>(JuegoController.getMovimientos(juego));
+            Movimientos = new ObservableCollection<MovimientoJuego>(JuegoController.getMovimientosTest(juego));
+
             Message = "" + Movimientos.Count;
         }
     }

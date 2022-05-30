@@ -9,6 +9,7 @@ namespace DepositoClassLibrary.juegos
 {
     public class MovimientoJuego
     {
+
         private JuegoDTO juegoDTO;
         public JuegoDTO JuegoDTO
         {
@@ -19,8 +20,23 @@ namespace DepositoClassLibrary.juegos
         private MovimientoJuegoDTO movimientoJuegoDTO;
         public MovimientoJuegoDTO MovimientoJuegoDTO
         {
-            get { return MovimientoJuegoDTO; }
-            set { MovimientoJuegoDTO = value; }
+            get { return movimientoJuegoDTO; }
+            set { movimientoJuegoDTO = value; }
         }
+
+        private UbicacionDTO ubicacionOrigenDTO; 
+        public UbicacionDTO UbicacionOrigenDTO
+        {
+            get { return ubicacionOrigenDTO; }
+            set { ubicacionOrigenDTO = value; }
+        }
+
+        private UbicacionDTO ubicacionDestinoDTO;
+        public UbicacionDTO UbicacionDestinoDTO
+        {
+            get { return ubicacionDestinoDTO; }
+            set { ubicacionDestinoDTO = value; }
+        }
+
     }
 }

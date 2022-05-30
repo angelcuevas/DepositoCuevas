@@ -4,12 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DepositoCuevas.views.menu"
+             xmlns:views ="clr-namespace:DepositoCuevas.views"
              mc:Ignorable="d" 
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              
-            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:juegos="clr-namespace:DepositoCuevas.views.Juegos"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:juegos="clr-namespace:DepositoCuevas.views.Juegos" 
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             TextElement.FontWeight="Regular"
             TextElement.FontSize="13"
@@ -27,6 +29,7 @@
         <Grid.RowDefinitions>
             <RowDefinition  Height="auto"/>
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <materialDesign:Card
             Grid.ZIndex="1"
@@ -65,7 +68,31 @@
                                 Content="{materialDesign:PackIcon Kind=Plus}"
                                 Style="{StaticResource MaterialDesignFloatingActionAccentButton}" />
                 </materialDesign:NavigationRailAssist.FloatingContent>-->
-                <TabItem Width="auto">
+            <TabItem Width="auto">
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                                        Width="{StaticResource iconSize}"
+                                        Height="{StaticResource iconSize}"
+                                        HorizontalAlignment="Center"
+                                        Kind="Map" />
+                        <TextBlock HorizontalAlignment="Center" Text="Principal" />
+                    </StackPanel>
+                </TabItem.Header>
+
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <views:DepositoMapa
+                        Grid.Row="0" 
+                        />
+                </Grid>
+            </TabItem>
+            <TabItem Width="auto">
                     <TabItem.Header>
                         <StackPanel Width="auto" Height="auto">
                             <materialDesign:PackIcon
@@ -126,7 +153,7 @@
                     </StackPanel>
                 </TabItem>
 
-                <TabItem>
+                <!--<TabItem>
                     <TabItem.Header>
                         <StackPanel Width="auto" Height="auto">
                             <materialDesign:PackIcon
@@ -180,9 +207,12 @@
                                     </Run>
                         </TextBlock>
                     </StackPanel>
-                </TabItem>
+                </TabItem>-->
             </TabControl>
         <!--</materialDesign:Card>-->
+        <TextBlock Grid.Row="2"
+                       Margin="2"
+                       TextAlignment="Center">By Ángel Cuevas</TextBlock>
 
     </Grid>
 </UserControl>

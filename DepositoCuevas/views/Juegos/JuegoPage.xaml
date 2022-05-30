@@ -49,10 +49,10 @@
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
-        <TextBlock Grid.Row="2" Style="{StaticResource titleStyle}">Cantidad</TextBlock>
+        <!--<TextBlock Grid.Row="2" Style="{StaticResource titleStyle}">Cantidad</TextBlock>-->
         <TextBlock Grid.Row="3">
             <TextBlock.Text>
-                <MultiBinding StringFormat=" Son {0}">
+                <MultiBinding StringFormat=" - {0} movimientos registrados  ">
                     <Binding Path="Message"/>
                 </MultiBinding>
             </TextBlock.Text>
@@ -69,20 +69,58 @@
                  >
                 <DataGrid.Columns>
 
+                    <DataGridTemplateColumn
+                        Header="Origen"
+                    >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Grid.Row="3">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat=".{2} {1}-{3}">
+                                            <Binding Path="UbicacionOrigenDTO.Nombre"/>
+                                            <Binding Path="UbicacionOrigenDTO.Fila"/>
+                                            <Binding Path="UbicacionOrigenDTO.Columna"/>
+                                            <Binding Path="UbicacionOrigenDTO.Nivel"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn
+                        Header="Destino"
+                    >
+                    <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Grid.Row="3">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat=".{2} {1}-{3}">
+                                            <Binding Path="UbicacionDestinoDTO.Nombre"/>
+                                            <Binding Path="UbicacionDestinoDTO.Fila"/>
+                                            <Binding Path="UbicacionDestinoDTO.Columna"/>
+                                            <Binding Path="UbicacionDestinoDTO.Nivel"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>                    
+
                     <DataGridTextColumn
-                        Binding="{Binding Path=SaldoAnterior}"
+                        Binding="{Binding Path=MovimientoJuegoDTO.SaldoAnterior}"
                         Header="SaldoAnterior"
                         ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                     />
 
                     <DataGridTextColumn
-                        Binding="{Binding Path=Cantidad}"
+                        Binding="{Binding Path=MovimientoJuegoDTO.Cantidad}"
                         Header="Cantidad"
                         ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                     />
 
                     <DataGridTextColumn
-                        Binding="{Binding Path=Saldo}"
+                        Binding="{Binding Path=MovimientoJuegoDTO.Saldo}"
                         Header="Saldo"
                         ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                     />

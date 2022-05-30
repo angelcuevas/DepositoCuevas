@@ -177,16 +177,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\CanvasHelper.cs" />
+    <Compile Include="classes\DepositoMedidasHelper.cs" />
+    <Compile Include="classes\EstanteriaUbicacion.cs" />
+    <Compile Include="classes\EstanteriaVisualHandler.cs" />
+    <Compile Include="classes\RectangleArguments.cs" />
     <Compile Include="classes\ViewsVisivility.cs" />
     <Compile Include="Commands\ActionCommand .cs" />
     <Compile Include="Commands\AnotherCommandImplementation.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="interfaces\PropertyChangedNotifier.cs" />
+    <Compile Include="viewmodels\helpers\MapaDepositoTextHelper.cs" />
     <Compile Include="viewmodels\Juegos\JuegosListViewModel.cs" />
     <Compile Include="viewmodels\Juegos\JuegosPageViewModel.cs" />
     <Compile Include="viewmodels\MainWindowViewModel.cs" />
+    <Compile Include="viewmodels\MapaDepositoViewModel.cs" />
     <Compile Include="views\common\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\DepositoMapa.xaml.cs">
+      <DependentUpon>DepositoMapa.xaml</DependentUpon>
     </Compile>
     <Compile Include="views\Juegos\JuegoPage.xaml.cs">
       <DependentUpon>JuegoPage.xaml</DependentUpon>
@@ -226,6 +236,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\common\Loading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\DepositoMapa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

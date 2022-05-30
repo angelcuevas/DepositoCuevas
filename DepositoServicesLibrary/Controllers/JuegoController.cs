@@ -104,26 +104,65 @@ namespace DepositoServicesLibrary.Controllers
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .ToDictionary(prop => prop.Name, prop => prop.GetValue(o, null));
         }
+
+        public static string mapUbicacionFieldNames(string alias)
+        {
+            string result = "";
+            string[] fields = new string[] { "nivel", "fila", "columna", "nombre"};
+
+            foreach (var field in fields)
+            {
+                result += alias + "." + field;
+            }
+
+            return result; 
+        }
         public static List<MovimientoJuego> getMovimientosTest(Juego juego)
         {
+
             //Slapper.AutoMapper.Map<Customer>(list);
-            List<Movimiento> lista = SqliteDataAccess<Movimiento>.query("SELECT mj.id as movimientoJuegoId, mj.*, j.* from movimientos_juego as mj LEFT JOIN juegos as j ON j.id = mj.juego_id where j.codigo = " + juego.getJuego().Codigo);
+            List<Movimiento> lista = SqliteDataAccess<Movimiento>.query("SELECT mj.id AS movimientoJuegoId, mj.cantidad as MovimientoJuegoCantidad, mj.*, j.*, m.*, ud.*, ud.id AS ubicacionDestinoId, uo.id AS ubicacionOrigenId, uo.nivel as nivelOrigen, uo.fila as filaOrigen, uo.columna as columnaOrigen, uo.nombre as nombreOrigen  FROM movimientos_juego as mj LEFT JOIN juegos as j ON j.id = mj.juego_id LEFT JOIN movimientos as m ON m.id = mj.movimiento_id LEFT JOIN ubicaciones as ud ON ud.id = m.ubicacion_destino LEFT JOIN ubicaciones as uo ON uo.id = m.ubicacion_origen  WHERE j.codigo = " + juego.getJuego().Codigo);
 
-            //List<MovimientoJuego> movimientos = lista.Find(l => new MovimientoJuego()
-            //{
-            //    JuegoDTO = new JuegoDTO()
-            //    {
-            //        Id = l.JuegoId,
-            //        Cantidad = l.JuegoCantidad,
-            //        Descripcion = l.Descripcion
-            //    },
-            //    MovimientoJuegoDTO = new MovimientoJuegoDTO()
-            //    {
+           
+            return lista.Select(l => new MovimientoJuego()
+            {
+                JuegoDTO = new JuegoDTO()
+                {
+                    Id = l.JuegoId,
+                    Cantidad = l.JuegoCantidad,
+                    Descripcion = l.Descripcion,
+                    Codigo = l.Codigo
+                },
+                MovimientoJuegoDTO = new MovimientoJuegoDTO()
+                {
+                    Id = l.MovimientoJuegoId,
+                    Cantidad = l.MovimientoJuegoCantidad,
+                    MovimientoId = l.MovimientoId,
+                    JuegoId = l.JuegoId,
+                    SaldoAnterior = l.SaldoAnterior,
+                    Saldo = l.Saldo
+                },
+                UbicacionOrigenDTO = new UbicacionDTO()
+                {
+                    Id = l.UbicacionOrigenId,
+                    Nombre = l.NombreORigen,
+                    Fila = l.FilaOrigen,
+                    Columna = l.ColumnaOrigen,
+                    Nivel = l.NivelOrigen
+                },
+                UbicacionDestinoDTO = new UbicacionDTO()
+                {
+                    Id = l.UbicacionDestinoId,
+                    Nombre = l.Nombre,
+                    Fila = l.Fila,
+                    Columna = l.Columna,
+                    Nivel = l.Nivel
 
-            //    }
-            //});
+                }
+                
+            }).ToList<MovimientoJuego>();
 
-            return new List<MovimientoJuego>();
+            //return new List<MovimientoJuego>();
         }
     }
 }
