@@ -6,21 +6,19 @@ using System.Threading.Tasks;
 
 namespace DepositoCuevas.classes
 {
-    public class EstanteriaUbicacion
+    public class ModuloUbicacion
     {
+        public EstanteriaUbicacion estanteriaUbicacion;
         public string name = "";
         public double x = 0;
         public double y = 0;
         public double alto = 0;
         public double ancho = 0;
-        public orientacion orientacion;
-        public int cantidadDeModulos = 0;
         public int numero = 0;
-    }
 
-    public enum orientacion
-    {
-        HACIA_DERECHA,
-        HACIA_IZQUIERDA
+        public string getDescripcion()
+        {
+            return "Estanteria " + estanteriaUbicacion.numero + " Módulo " + numero;
+        }
     }
 }

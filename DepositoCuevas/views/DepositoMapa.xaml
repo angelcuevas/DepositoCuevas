@@ -26,11 +26,11 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <TextBlock Text="{Binding Path=TextHelper.ModuloHoverDescripcion}" />
+            
         </Grid>
 
-        
-        <Viewbox Stretch="Uniform" >
+
+        <Viewbox Stretch="Uniform" Visibility="{Binding Path=VisibilityHelper.Mapa}">
             <Viewbox.RenderTransform>
                 <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
             </Viewbox.RenderTransform>
@@ -39,21 +39,26 @@
                 <Canvas.LayoutTransform>
                     <ScaleTransform />
                 </Canvas.LayoutTransform>
-
+                <TextBlock Text="{Binding Path=TextHelper.ModuloHoverDescripcion}" Canvas.Right="5" Canvas.Top="5" />
             </Canvas>
                 
         </Viewbox>
 
+        <Viewbox Stretch="Uniform" Visibility="{Binding Path=VisibilityHelper.Estanteria}">
+            <Viewbox.RenderTransform>
+                <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+            </Viewbox.RenderTransform>
 
-        <TextBlock Grid.Row="2">COsas</TextBlock>
+            <Canvas Grid.Row="4" Name="myCanvasEstanteria" Width="800" Height="300" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseMove="myCanvas_MouseMove">
+                <Canvas.LayoutTransform>
+                    <ScaleTransform />
+                </Canvas.LayoutTransform>
+                
+            </Canvas>
 
-        <!--<Rectangle x:Name="
-                Width="1200" 
-                Height="500" 
-                Fill="Gray"
-                Canvas.Left="0"
-                Canvas.Top="0"/>-->
-        
+        </Viewbox>
+
+
 
     </Grid>
 </UserControl>

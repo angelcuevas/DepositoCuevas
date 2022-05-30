@@ -15,5 +15,7 @@ namespace DepositoCuevas.classes
         public double Left = 0;
         public double Top = 0;
         public bool showBorder = false;
+        public bool differentColorOnHover = false; 
+        public string text = "";
     }
 }

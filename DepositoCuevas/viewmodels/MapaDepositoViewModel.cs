@@ -12,20 +12,27 @@ using System.Windows.Shapes;
 
 namespace DepositoCuevas.viewmodels
 {
-    public class MapaDepositoViewModel//: INotifyPropertyChanged
+    public class MapaDepositoViewModel : INotifyPropertyChanged
     {
         private Canvas canvas;
+        private Canvas estanteriaCanvas;
         private DepositoMedidasHelper medidasHelper;
         private CanvasHelper canvasHelper;
 
-        private MapaDepositoTextHelper textHelper;
-
+        private MapaDepositoTextHelper textHelper = new MapaDepositoTextHelper();
         public MapaDepositoTextHelper TextHelper
         {
             get { return textHelper; }
             set { textHelper = value; NotifyPropertyChanged("TextHelper"); }
         }
 
+        private MapaDepositoVisibilityHelper visibilityHelper = new MapaDepositoVisibilityHelper();
+
+        public MapaDepositoVisibilityHelper VisibilityHelper
+        {
+            get { return visibilityHelper; }
+            set {  visibilityHelper = value; NotifyPropertyChanged("VisibilityHelper"); }          
+        }
 
         #region InotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -42,9 +49,10 @@ namespace DepositoCuevas.viewmodels
         }
         #endregion
 
-        public MapaDepositoViewModel(Canvas myCanvas)
+        public MapaDepositoViewModel(Canvas myCanvas, Canvas estanteriaCanvas)
         {
             this.canvas = myCanvas;
+            this.estanteriaCanvas = estanteriaCanvas; 
             this.canvasHelper = new CanvasHelper(this.canvas);
             this.medidasHelper = new DepositoMedidasHelper(myCanvas.Height, myCanvas.Width);
             drawDeposito();
@@ -58,7 +66,7 @@ namespace DepositoCuevas.viewmodels
 
         private void drawDepositoBackground()
         {
-            SolidColorBrush colorFondo = new SolidColorBrush(Color.FromArgb(20, (byte)150, (byte)150, (byte)150));
+            SolidColorBrush colorFondo = new SolidColorBrush(Color.FromArgb(100, (byte)150, (byte)150, (byte)150));
             canvasHelper.drawRectangle(new RectangleArguments() { Height = medidasHelper.Heigth, Width = medidasHelper.Width, Fill = colorFondo, Left = 0, Top = 0 });
         }
 
@@ -69,19 +77,59 @@ namespace DepositoCuevas.viewmodels
             medidasHelper.ubicacionesEstanterias.ForEach(ubicacion =>
             {
                 canvasHelper.drawRectangle(new RectangleArguments() { Height = ubicacion.alto, Width = ubicacion.ancho, Fill = colorEstanterias, Left = ubicacion.x, Top = ubicacion.y });
+                DrawEstanteriaNumber(ubicacion);
                 EstanteriaVisualHandler handler = new EstanteriaVisualHandler(ubicacion, canvas);
                 handler.OnHover += handleEstanteriaHover;
+                handler.OnClick += handleEstanteriaClick;
             });
             
         }
 
-        private void handleEstanteriaHover(EstanteriaUbicacion ubicacion)
+        private void DrawEstanteriaNumber(EstanteriaUbicacion ubicacion)
         {
-            TextHelper.ModuloHoverDescripcion = ubicacion.name;
+            double x = 0;
+
+            if (ubicacion.orientacion == orientacion.HACIA_IZQUIERDA)
+            {
+                x = ubicacion.x + ubicacion.ancho;
+            }
+
+            if (ubicacion.orientacion == orientacion.HACIA_DERECHA)
+            {
+                x = ubicacion.x - medidasHelper.anchoEstanterias /25 ;
+            }
+
+            canvasHelper.WriteText(new CanvasTextArguments()
+            {
+                x = x,
+                y = ubicacion.y,
+                text = ""+ubicacion.numero,
+                isBold = true
+            });
+        }
+
+        private void handleEstanteriaHover(ModuloUbicacion ubicacion)
+        {
+            TextHelper.ModuloHoverDescripcion = ubicacion.getDescripcion();
+        }
+
+        private void handleEstanteriaClick(ModuloUbicacion ubicacion)
+        {
+            showVistaEstanteria(ubicacion);
+        }
+
+        private void showVistaEstanteria(ModuloUbicacion ubicacion)
+        {
+            visibilityHelper.showEstanteria();
+            drawEstanteriaView(ubicacion);
+
+        }
+
+        private void drawEstanteriaView(ModuloUbicacion ubicacion)
+        {
+            EstanteriaViewVisualHandler handler = new EstanteriaViewVisualHandler(ubicacion, estanteriaCanvas, medidasHelper);
         }
 
 
-
-  
     }
 }

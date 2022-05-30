@@ -28,13 +28,12 @@ namespace DepositoCuevas.views
             InitializeComponent();
             Loaded += onLoaded;
 
-           
         }
 
         public void onLoaded(object sender, RoutedEventArgs e)
         {
             Console.WriteLine(myCanvas.Height);
-            viewModel = new MapaDepositoViewModel(myCanvas);
+            viewModel = new MapaDepositoViewModel(myCanvas, myCanvasEstanteria);
             this.DataContext = viewModel;
         }
 

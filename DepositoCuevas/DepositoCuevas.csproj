@@ -178,9 +178,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="classes\CanvasHelper.cs" />
+    <Compile Include="classes\CanvasTextArguments.cs" />
     <Compile Include="classes\DepositoMedidasHelper.cs" />
     <Compile Include="classes\EstanteriaUbicacion.cs" />
+    <Compile Include="classes\EstanteriaViewVisualHandler.cs" />
     <Compile Include="classes\EstanteriaVisualHandler.cs" />
+    <Compile Include="classes\MapaDepositoVisibilityHelper.cs" />
+    <Compile Include="classes\ModuloUbicacion.cs" />
     <Compile Include="classes\RectangleArguments.cs" />
     <Compile Include="classes\ViewsVisivility.cs" />
     <Compile Include="Commands\ActionCommand .cs" />
