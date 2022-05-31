@@ -104,6 +104,7 @@
     <Reference Include="System.Diagnostics.Tracing, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Diagnostics.Tracing.4.3.0\lib\net462\System.Diagnostics.Tracing.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
     </Reference>
@@ -183,6 +184,8 @@
     <Compile Include="classes\EstanteriaUbicacion.cs" />
     <Compile Include="classes\EstanteriaViewVisualHandler.cs" />
     <Compile Include="classes\EstanteriaVisualHandler.cs" />
+    <Compile Include="classes\ImageArguments.cs" />
+    <Compile Include="classes\imageHelper.cs" />
     <Compile Include="classes\MapaDepositoVisibilityHelper.cs" />
     <Compile Include="classes\ModuloUbicacion.cs" />
     <Compile Include="classes\RectangleArguments.cs" />
@@ -290,6 +293,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="images\pallet_frente.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace DepositoCuevas.classes
@@ -30,6 +31,12 @@ namespace DepositoCuevas.classes
             rectangleText.Text = args.text;
             rectangleText.TextAlignment = TextAlignment.Center;
             rectangleText.FontSize = 10;
+            rectangleText.VerticalAlignment = VerticalAlignment.Center;
+
+            if (args.isBold)
+            {
+                rectangleText.FontWeight = FontWeights.Bold;
+            }
             
             Rectangle rectangle = new Rectangle();
             rectangleGrid.Children.Add(rectangleText);
@@ -147,5 +154,37 @@ namespace DepositoCuevas.classes
                 txt.FontWeight = FontWeights.Bold;
             }
         }
+
+        public void drawImage(ImageArguments args)
+        {
+            Grid grid = new Grid();
+            Image image = new Image();
+
+            BitmapImage logo = new BitmapImage();
+            logo.BeginInit();
+            logo.UriSource = new Uri(@"/images/" + args.imageName, UriKind.Relative);
+            logo.EndInit();
+
+
+            image.Source = logo;
+
+            if (args.width != -1) {
+                grid.Width = args.width;
+            }
+            if (args.height != -1) {
+                grid.Height = args.height;
+            }
+            image.HorizontalAlignment = HorizontalAlignment.Stretch;
+            image.VerticalAlignment = VerticalAlignment.Stretch;
+            grid.Children.Add(image);
+            
+
+            Canvas.SetLeft(grid, args.x);
+            Canvas.SetTop(grid, args.y);
+            canvas.Children.Add(grid);
+        }
+
+
+
     }
 }

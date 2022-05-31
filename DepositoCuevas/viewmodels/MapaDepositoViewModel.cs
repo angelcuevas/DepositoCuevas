@@ -67,7 +67,7 @@ namespace DepositoCuevas.viewmodels
         private void drawDepositoBackground()
         {
             SolidColorBrush colorFondo = new SolidColorBrush(Color.FromArgb(100, (byte)150, (byte)150, (byte)150));
-            canvasHelper.drawRectangle(new RectangleArguments() { Height = medidasHelper.Heigth, Width = medidasHelper.Width, Fill = colorFondo, Left = 0, Top = 0 });
+            canvasHelper.drawRectangle(new RectangleArguments() { Height = medidasHelper.Heigth, Width = medidasHelper.Width, Fill = colorFondo, Left = 0, Top = 0, showBorder = true });
         }
 
         private void drawEstanterias()
