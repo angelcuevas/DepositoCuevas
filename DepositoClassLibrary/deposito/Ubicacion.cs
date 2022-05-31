@@ -8,24 +8,19 @@ namespace DepositoClassLibrary.deposito
     {
         private int id; 
         private int nivel;
-        private string fila;
-        private string columna; 
+        private string estanteria;
+        private string modulo;
+        private int bancal;
         private string nombre; 
         
         public int Nivel { get; set; }
-        public string Fila { get; set; }
-        public string Columna { get; set; }
+        public string Estanteria { get; set; }
+        public string Modulo { get; set; }
         public string Nombre { get; set; }
+
+        public int Bancal { get; set; }
 
         public int Id { get; set; }
 
-        public Ubicacion(int nivel, string fila, string columna, string nombre)
-        {
-            this.nivel = nivel;
-            this.fila = fila;
-            this.columna = columna;
-            this.nombre = nombre;
-        }
-        public Ubicacion() { }
     }
 }

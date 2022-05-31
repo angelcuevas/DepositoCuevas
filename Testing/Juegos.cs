@@ -67,7 +67,22 @@ namespace DepositoLibTesting
         {
             Random rnd = new Random();
 
-            Juego juegoModificado = JuegoController.addMovimiento(juego, rnd.Next(5, 200));
+            UbicacionDTO origen = UbicacionController.getUbicacionFromDB(new UbicacionDTO(){
+                Estanteria = "1",
+                Modulo = "1",
+                Nivel = 1,
+                Bancal = 1
+            });
+
+            UbicacionDTO destino = UbicacionController.getUbicacionFromDB(new UbicacionDTO()
+            {
+                Estanteria = "1",
+                Modulo = "1",
+                Nivel = 1,
+                Bancal = 2
+            });
+
+            Juego juegoModificado = JuegoController.addMovimiento(origen, destino, juego, rnd.Next(5, 200));
 
             Assert.GreaterOrEqual(juegoModificado.getCantidad(), juego.getCantidad());
         }

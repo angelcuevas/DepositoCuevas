@@ -59,15 +59,15 @@ namespace DepositoServicesLibrary.Controllers
         }
         public static int crearMovimiento(int ubicacionOrigen, int ubicacionDestino)
         {
-            MovimientoDTO movimiento = new MovimientoDTO() {Fecha = DateTime.Now.ToLocalTime(), UbicacionOrigen = ubicacionDestino, UbicacionDestino = ubicacionDestino, Comentario = ""  } ;
+            MovimientoDTO movimiento = new MovimientoDTO() {Fecha = DateTime.Now.ToLocalTime(), UbicacionOrigen = ubicacionOrigen, UbicacionDestino = ubicacionDestino, Comentario = ""  } ;
             return movimientoDataAccess.save(movimiento);
         }
-        public static MovimientoJuegoDTO crearNuevoMovimiento(Juego juego, int cantidad)
+        public static MovimientoJuegoDTO crearNuevoMovimiento(UbicacionDTO origen, UbicacionDTO destino, Juego juego, int cantidad)
         {
             List<MovimientoJuegoDTO> lista = movimientoJuegoDataAccess.getAll(" juego_id = " + juego.getJuego().Id);
 
             MovimientoJuegoDTO movimiento = new MovimientoJuegoDTO();
-            int id = crearMovimiento(0, 9);
+            int id = crearMovimiento(origen.Id, destino.Id);
 
             movimiento.MovimientoId = id;
             movimiento.JuegoId = juego.getJuego().Id;
@@ -84,10 +84,10 @@ namespace DepositoServicesLibrary.Controllers
             return movimiento;
         }
 
-        public static Juego addMovimiento(Juego juego, int cantidad)
+        public static Juego addMovimiento(UbicacionDTO origen, UbicacionDTO destino, Juego juego, int cantidad)
         {
             
-            MovimientoJuegoDTO nuevoMovimiento = crearNuevoMovimiento(juego, cantidad);
+            MovimientoJuegoDTO nuevoMovimiento = crearNuevoMovimiento(origen, destino,juego, cantidad);
             movimientoJuegoDataAccess.save(nuevoMovimiento);
             juego.setCantidad(nuevoMovimiento.Saldo);
 
@@ -121,9 +121,8 @@ namespace DepositoServicesLibrary.Controllers
         {
 
             //Slapper.AutoMapper.Map<Customer>(list);
-            List<Movimiento> lista = SqliteDataAccess<Movimiento>.query("SELECT mj.id AS movimientoJuegoId, mj.cantidad as MovimientoJuegoCantidad, mj.*, j.*, m.*, ud.*, ud.id AS ubicacionDestinoId, uo.id AS ubicacionOrigenId, uo.nivel as nivelOrigen, uo.fila as filaOrigen, uo.columna as columnaOrigen, uo.nombre as nombreOrigen  FROM movimientos_juego as mj LEFT JOIN juegos as j ON j.id = mj.juego_id LEFT JOIN movimientos as m ON m.id = mj.movimiento_id LEFT JOIN ubicaciones as ud ON ud.id = m.ubicacion_destino LEFT JOIN ubicaciones as uo ON uo.id = m.ubicacion_origen  WHERE j.codigo = " + juego.getJuego().Codigo);
+            List<Movimiento> lista = SqliteDataAccess<Movimiento>.query("SELECT mj.id AS movimientoJuegoId, mj.cantidad as MovimientoJuegoCantidad, mj.*, j.*, m.*, ud.*, ud.id AS ubicacionDestinoId, uo.id AS ubicacionOrigenId, uo.nivel as nivelOrigen, uo.estanteria as estanteriaOrigen, uo.modulo as ModuloOrigen, uo.bancal as bancalOrigen, uo.nombre as nombreOrigen  FROM movimientos_juego as mj LEFT JOIN juegos as j ON j.id = mj.juego_id LEFT JOIN movimientos as m ON m.id = mj.movimiento_id LEFT JOIN ubicaciones as ud ON ud.id = m.ubicacion_destino LEFT JOIN ubicaciones as uo ON uo.id = m.ubicacion_origen  WHERE j.codigo = " + juego.getJuego().Codigo);
 
-           
             return lista.Select(l => new MovimientoJuego()
             {
                 JuegoDTO = new JuegoDTO()
@@ -146,23 +145,25 @@ namespace DepositoServicesLibrary.Controllers
                 {
                     Id = l.UbicacionOrigenId,
                     Nombre = l.NombreORigen,
-                    Fila = l.FilaOrigen,
-                    Columna = l.ColumnaOrigen,
+                    Estanteria = l.EstanteriaOrigen,
+                    Modulo = l.ModuloOrigen,
+                    Bancal = l.BancalOrigen,
                     Nivel = l.NivelOrigen
                 },
                 UbicacionDestinoDTO = new UbicacionDTO()
                 {
                     Id = l.UbicacionDestinoId,
                     Nombre = l.Nombre,
-                    Fila = l.Fila,
-                    Columna = l.Columna,
+                    Estanteria = l.Estanteria,
+                    Modulo = l.Modulo,
+                    Bancal = l.Bancal,
                     Nivel = l.Nivel
 
                 }
                 
             }).ToList<MovimientoJuego>();
 
-            //return new List<MovimientoJuego>();
+            
         }
     }
 }

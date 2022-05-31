@@ -36,18 +36,14 @@ namespace DepositoLibTesting
         [Test]
         public void Ubicacion()
         {
-            SqliteDataAccess<Ubicacion> dataAccess = new SqliteDataAccess<Ubicacion>();
+            SqliteDataAccess<UbicacionDTO> dataAccess = new SqliteDataAccess<UbicacionDTO>();
 
             bool savedOk = true;
 
             try
             {
-                dataAccess.save(new Ubicacion() { Nivel = 1, Columna = "A", Fila =  "1", Nombre = "A1" });
-                dataAccess.save(new Ubicacion() { Nivel = 1, Columna = "A", Fila = "2", Nombre = "A2" });
-                dataAccess.save(new Ubicacion() { Nivel = 1, Columna = "A", Fila = "3", Nombre = "A3" });
-                dataAccess.save(new Ubicacion() { Nivel = 1, Columna = "A", Fila = "4", Nombre = "A4" });
-                dataAccess.save(new Ubicacion() { Nivel = 1, Columna = "A", Fila = "5", Nombre = "A5" });
-                dataAccess.save(new Ubicacion() { Nivel = 1, Columna = "A", Fila = "6", Nombre = "A6" });
+                dataAccess.save(new UbicacionDTO() { Estanteria = "1", Modulo =  "1", Nivel = 1, Bancal = 1, Nombre = "A1" });
+
             }
             catch (Exception e)
             {

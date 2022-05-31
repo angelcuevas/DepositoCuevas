@@ -45,26 +45,31 @@ namespace DepositoClassLibrary.DTOscombinados
 
         private int ubicacionDestinoId;
         private int nivel;
-        private string fila;
-        private string columna;
+        private string estanteria;
+        private string modulo;
+        private int bancal;
         private string nombre;
 
         public int UbicacionDestinoId { get; set; }
         public int Nivel { get; set; }
-        public string Fila { get; set; }
-        public string Columna { get; set; }
+        public string Estanteria { get; set; }
+        public string Modulo { get; set; }
+        public int Bancal { get; set; }
         public string Nombre { get; set; }
 
         private int ubicacionOrigenId;
         private int nivelOrigen;
-        private string filaOrigen;
-        private string columnaOrigen;
+        private string estanteriaOrigen;
+        private string moduloOrigen;
+        private int bancalOrigen;
         private string nombreOrigen;
 
         public int UbicacionOrigenId { get; set; }
         public int NivelOrigen { get; set; }
-        public string FilaOrigen { get; set; }
-        public string ColumnaOrigen { get; set; }
+        public string EstanteriaOrigen { get; set; }
+        public string ModuloOrigen { get; set; }
+
+        public int BancalOrigen { get; set; }
         public string NombreORigen { get; set; }
     }
 }

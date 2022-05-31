@@ -27,7 +27,7 @@ namespace DepositoServicesLibrary.database
         }
         public override string InsertString
         {
-            get { return "insert into ubicaciones_estados_juegos (ubicaciones_estados_id, juegos_id, cantidad) values (@Ubicaciones_estados_id, @Juegos_id, @Cantidad)"; }
+            get { return "insert into ubicaciones_estados_juegos (ubicaciones_estados_id, juegos_cantidad_id) values (@UbicacionesEstadosId, @JuegosCantidadId)"; }
         }
         public override int getId(object ubicacionesEstadosJuegosDTO)
         {
@@ -35,15 +35,12 @@ namespace DepositoServicesLibrary.database
         }
         public override string duclicityString
         {
-            get { return "ubicaciones_estados_id = @Ubicaciones_estados_id AND juegos_id = @Juegos_id AND cantidad = @Cantidad"; }
+            get { return ""; }
         }
         public override Dictionary<String, object> getDuplicityParameters(object obj)
         {
             UbicacionesEstadosJuegosDTO ubicacionesEstadosJuegosDTO = obj as UbicacionesEstadosJuegosDTO;
             Dictionary<String, object> dictionary = new Dictionary<String, object>();
-            dictionary.Add("@Ubicaciones_estados_id", ubicacionesEstadosJuegosDTO.Ubicaciones_estados_id);
-            dictionary.Add("@Juegos_id", ubicacionesEstadosJuegosDTO.Juegos_id);
-            dictionary.Add("@Cantidad", ubicacionesEstadosJuegosDTO.Cantidad); ;
 
 
             return dictionary;

@@ -13,7 +13,7 @@ namespace DepositoServicesLibrary.database
         {
             switch (typeof(T))
             {
-                case var cls when cls == typeof(Ubicacion):
+                case var cls when cls == typeof(UbicacionDTO):
                     return new UbicacionTableQueryINfo();
                 case var cls when cls == typeof(JuegoDTO):
                     return new JuegoTableQueryInfo();

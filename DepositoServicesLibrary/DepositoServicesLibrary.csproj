@@ -232,6 +232,7 @@
     <Compile Include="Controllers\JuegoController.cs" />
     <Compile Include="Controllers\UbicacionController.cs" />
     <Compile Include="database\EstanteríaTableQueryInfo.cs" />
+    <Compile Include="database\JuegoCantidadTableQueryInfo.cs" />
     <Compile Include="database\JuegoMovimientoTableQueryInfo.cs" />
     <Compile Include="database\JuegoTableQueryInfo.cs" />
     <Compile Include="database\MovimientoTableQueryInfo.cs" />

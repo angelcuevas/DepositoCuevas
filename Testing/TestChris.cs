@@ -53,8 +53,9 @@ namespace DepositoLibTesting
             UbicacionDTO ubicacion = new UbicacionDTO();
             ubicacion.Id = 13;
             ubicacion.Nivel = 14;
-            ubicacion.Fila = "fila 13 14";
-            ubicacion.Columna = "Columna 13 fila 14";
+            ubicacion.Estanteria = "2";
+            ubicacion.Modulo = "2";
+            ubicacion.Bancal = 1;
             ubicacion.Nombre = "Nombre";
             Assert.NotNull(ubicacion);
         }
@@ -64,22 +65,22 @@ namespace DepositoLibTesting
         {
             UbicacionesEstadosDTO ubicacionEstado = new UbicacionesEstadosDTO();
             ubicacionEstado.Fecha = "2014-02-013";
-            ubicacionEstado.Movimiento_id = 1;
+            ubicacionEstado.MovimientoId = 1;
             Assert.NotNull(ubicacionEstado);
         }
         [Test]
         public void instanciarUbicacionesEstadosJuegosDTO()
         {
             ubicacionEstadoJuego = new UbicacionesEstadosJuegosDTO();
-            ubicacionEstadoJuego.Ubicaciones_estados_id = 1;
-            ubicacionEstadoJuego.Juegos_id = 1;
-            ubicacionEstadoJuego.Cantidad = 1;
+            ubicacionEstadoJuego.UbicacionesEstadosId = 1;
+            ubicacionEstadoJuego.JuegosCantidadId = 1;
+            
             Assert.NotNull(ubicacionEstadoJuego);
         }
         [Test]
         public void GuardarUbicacionEstadoJuegoEnBase()
         {
-            this.ubicacionEstadoJuego = new UbicacionesEstadosJuegosDTO() { Ubicaciones_estados_id = 1, Juegos_id = 1, Cantidad = 201 };
+            this.ubicacionEstadoJuego = new UbicacionesEstadosJuegosDTO() { UbicacionesEstadosId = 1, JuegosCantidadId = 1 };
             try
             {
                 this.ubicacionEstadoJuego = UbicacionController.saveAndGet(ubicacionEstadoJuego);

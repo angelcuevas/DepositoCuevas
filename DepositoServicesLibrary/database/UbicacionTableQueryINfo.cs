@@ -1,4 +1,5 @@
 ﻿using DepositoClassLibrary.deposito;
+using DepositoClassLibrary.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,23 +27,24 @@ namespace DepositoServicesLibrary.database
         }
         public override string InsertString
         {
-            get { return "insert into ubicaciones (nivel, columna, fila, nombre) values (@Nivel, @Columna, @Fila, @Nombre)"; }
+            get { return "insert into ubicaciones (estanteria, modulo, nivel, bancal, nombre) values (@Estanteria, @Modulo, @Nivel, @Bancal, @Nombre)"; }
         }
         public override int getId(object ubicacion)
         {
-            return ((Ubicacion)ubicacion).Id;
+            return ((UbicacionDTO)ubicacion).Id;
         }
 
         public override string duclicityString {
-            get { return " nivel = @Nivel AND columna = @columna AND fila = @Fila "; }
+            get { return " estanteria = @Estanteria AND modulo = @Modulo AND nivel = @Nivel AND bancal = @Bancal "; }
         }
         public override Dictionary<String, object> getDuplicityParameters(object obj)
         {
-            Ubicacion ubicacion = obj as Ubicacion;
+            UbicacionDTO ubicacion = obj as UbicacionDTO;
             Dictionary<String, object> dictionary = new Dictionary<String, object>();
-            dictionary.Add("@Nivel", ubicacion.Nivel );
-            dictionary.Add("@Columna", ubicacion.Columna);
-            dictionary.Add("@Fila", ubicacion.Fila);
+            dictionary.Add("@Estanteria", ubicacion.Estanteria);
+            dictionary.Add("@Modulo", ubicacion.Modulo);
+            dictionary.Add("@Nivel", ubicacion.Nivel);
+            dictionary.Add("@Bancal", ubicacion.Bancal);
             return dictionary;
         }
 

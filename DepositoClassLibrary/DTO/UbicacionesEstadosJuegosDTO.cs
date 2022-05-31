@@ -9,13 +9,12 @@ namespace DepositoClassLibrary.DTO
     public class UbicacionesEstadosJuegosDTO
     {
         private int id;
-        private int ubicaciones_estados_id;
-        private int juegos_id;
-        private int cantidad;
+        private int ubicacionesEstadosId;
+        private int juegosCantidadId;
 
         public int Id { get; set; }
-        public int Ubicaciones_estados_id { get; set; }
-        public int Juegos_id { get; set; }
-        public int Cantidad { get; set; }
+        public int UbicacionesEstadosId { get; set; }
+        public int JuegosCantidadId { get; set; }
+
     }
 }

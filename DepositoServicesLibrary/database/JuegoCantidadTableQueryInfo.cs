@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace DepositoServicesLibrary.database
 {
-    public class UbicacionesEstadosTableQueryInfo : TableQueryInfo
+    internal class JuegoCantidadTableQueryInfo : TableQueryInfo
     {
         public override string tableName
         {
-            get { return "ubicaciones_estados"; }
+            get { return "ubicaciones_estados_juegos"; }
         }
         public override string UpdateString
         {
@@ -23,27 +23,24 @@ namespace DepositoServicesLibrary.database
         }
         public override string SelectString
         {
-            get { return "select * from ubicaciones_estados"; }
+            get { return "select * from ubicaciones_estados_juegos"; }
         }
         public override string InsertString
         {
-            get { return "insert into ubicaciones_estados (fecha, movimiento_id, ubicacion_id) values (@Fecha, @MovimientoId, @UbicacionId)"; }
+            get { return "insert into ubicaciones_estados_juegos (juego_id, cantidad) values (@JuegoId, @Cantidad)"; }
         }
-        public override int getId(object ubicacionesEstadosDTO)
+        public override int getId(object ubicacionesEstadosJuegosDTO)
         {
-            return ((UbicacionesEstadosDTO)ubicacionesEstadosDTO).Id;
+            return ((JuegoCantidadDTO)ubicacionesEstadosJuegosDTO).Id;
         }
         public override string duclicityString
         {
-            get { return "fecha = @Fecha AND movimiento_id = @MovimientoId AND ubicacion_id = @UbicacionId"; }
+            get { return ""; }
         }
         public override Dictionary<String, object> getDuplicityParameters(object obj)
         {
-            UbicacionesEstadosDTO ubicacionesEstadosDTO = obj as UbicacionesEstadosDTO;
+            JuegoCantidadDTO ubicacionesEstadosJuegosDTO = obj as JuegoCantidadDTO;
             Dictionary<String, object> dictionary = new Dictionary<String, object>();
-            dictionary.Add("@Fecha", ubicacionesEstadosDTO.Fecha);
-            dictionary.Add("@MovimientoId", ubicacionesEstadosDTO.MovimientoId);
-            dictionary.Add("@UbicacionId", ubicacionesEstadosDTO.UbicacionId);
 
 
             return dictionary;

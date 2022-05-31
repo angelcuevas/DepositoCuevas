@@ -10,10 +10,12 @@ namespace DepositoClassLibrary.DTO
     {
         private int id;
         private DateTime fecha;
-        private int movimiento_id;
+        private int movimientoId;
+        private int ubicacionId;
 
         public int Id { get; set; }
         public string Fecha { get; set; }
-        public int Movimiento_id { get; set; }
+        public int MovimientoId { get; set; }
+        public int UbicacionId { get; set; }
     }
 }
