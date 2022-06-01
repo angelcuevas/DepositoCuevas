@@ -25,6 +25,12 @@ namespace DepositoCuevas.classes
         public double estanteriaViewLeft = 0;
         public double estanteriaViewTop = 0;
 
+        public List<int> lugaresIzquierda = new List<int>() { 3, 4, 7, 8, 11, 12, 15, 16, 19, 20, 23 };
+        public List<int> cantidadDeModulosIzquierda = new List<int>() { 6, 7, 7, 7, 5, 6, 5, 7, 6, 6, 7 };
+
+        public List<int> lugaresDerecha = new List<int>() { 12, 15, 16, 19, 20, 23 };
+        public List<int> cantidadDeModulosDerecha = new List<int>() { 7, 6, 6, 6, 5, 6 };
+
         public List<EstanteriaUbicacion> ubicacionesEstanterias = new List<EstanteriaUbicacion>();
 
         public DepositoMedidasHelper(double canvasHeigth, double canvasWidth)
@@ -58,11 +64,7 @@ namespace DepositoCuevas.classes
             int contador = 23;
             int contadorDeEstanterias = 1; 
 
-            List<int> lugaresIzquierda = new List<int>() { 3, 4, 7, 8, 11, 12, 15, 16, 19, 20, 23 };
-            List<int> cantidadDeModulosIzquierda = new List<int>() { 6, 7, 7, 7, 5, 6, 5, 7, 6, 6, 7 };
-            
-            List<int> lugaresDerecha = new List<int>() { 12, 15, 16, 19, 20, 23 };
-            List<int> cantidadDeModulosDerecha = new List<int>() { 7, 6, 6, 6, 5, 6 };
+
 
             while (contador > 0)
             {

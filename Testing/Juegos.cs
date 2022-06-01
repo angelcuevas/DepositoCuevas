@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using DepositoServicesLibrary;
 
 namespace DepositoLibTesting
 {
@@ -105,9 +106,49 @@ namespace DepositoLibTesting
 
         public void LoadUbicaciones()
         {
-            
+            List<int> cantidadDeModulosIzquierda = new List<int>() { 6, 7, 7, 7, 5, 6, 5, 7, 6, 6, 7 };
+            List<int> cantidadDeModulosDerecha = new List<int>() { 7, 6, 6, 6, 5, 6 };
+
+            cantidadDeModulosIzquierda.Reverse();
+            cantidadDeModulosDerecha.Reverse();
+
+            int contadorEstanterias = 1;
+
+            cantidadDeModulosIzquierda.ForEach(e =>
+            {
+                CreateUbicacionesDeEstanteria(contadorEstanterias, e);
+                contadorEstanterias++;
+            });
+
+            cantidadDeModulosDerecha.ForEach(e =>
+            {
+                CreateUbicacionesDeEstanteria(contadorEstanterias, e);
+                contadorEstanterias++;
+            });
+
         }
 
+        private void CreateUbicacionesDeEstanteria(int numeroEstanteria, int cantidadDeModulos)
+        {
+            SqliteDataAccess<UbicacionDTO> ubicacionDataAccess = new SqliteDataAccess<UbicacionDTO>();
+            for (int m = 0; m < cantidadDeModulos; m++)
+            {
+                for (int n = 0; n < 3; n++)
+                {
+                    for (int b = 0; b < 2; b++)
+                    {
+                        ubicacionDataAccess.save(new UbicacionDTO(){
+                            Estanteria = ""+numeroEstanteria,
+                            Modulo = ""+(m + 1),
+                            Nivel = n + 1,
+                            Bancal = b +1
+                        });
+                    }
+                }
+            }
+        }
+
+        
 
     }
 }
