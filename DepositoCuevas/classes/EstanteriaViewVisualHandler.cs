@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DepositoClassLibrary.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Windows.Media;
 
 namespace DepositoCuevas.classes
 {
+    public delegate void OnHoverDelegateUbicacionDTO(UbicacionDTO ubicacion);  // delegate
     public class EstanteriaViewVisualHandler
     {
         private ModuloUbicacion ubicacion;
@@ -15,7 +17,9 @@ namespace DepositoCuevas.classes
         private DepositoMedidasHelper medidasHelper;
         private int cantidadNiveles = 3; 
         private List<int> cantidadBancalesPorNivel = new List<int>() { 2,2,2};
-        
+
+        public event OnHoverDelegateUbicacionDTO OnHover; // event
+        public event OnHoverDelegateUbicacionDTO OnClick; // event
 
         public EstanteriaViewVisualHandler(ModuloUbicacion ubicacion, Canvas canvas, DepositoMedidasHelper medidasHelper)
         {
@@ -47,6 +51,16 @@ namespace DepositoCuevas.classes
                 double bancalWidth = medidasHelper.estanteriaViewWidth/cantidadBancalesPorNivel[contadorNivel - 1];
                 for (int n = 0; n < cantidadBancalesPorNivel[contadorNivel - 1]; n++)
                 {
+
+                    UbicacionDTO ub = new UbicacionDTO()
+                    {
+                        Estanteria = ""+ubicacion.estanteriaUbicacion.numero,
+                        Modulo = ""+ubicacion.numero,
+                        Nivel = contadorNivel,
+                        Bancal = (n + 1),
+                        Nombre = ""
+                    };
+
                     canvasHelper.drawRectangle(new RectangleArguments()
                     {
                         Height = nivelHeight*0.75,
@@ -59,7 +73,7 @@ namespace DepositoCuevas.classes
                         differentColorOnHover = true,
                         isBold = true
                     }, (string a) => {
-                        //OnHover.Invoke(moduloUbicacion);
+                        OnHover.Invoke(ub);
                     }
                     , (string a) => {
                         // OnClick.Invoke(moduloUbicacion);

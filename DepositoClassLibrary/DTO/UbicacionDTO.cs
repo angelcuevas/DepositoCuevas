@@ -23,5 +23,13 @@ namespace DepositoClassLibrary.DTO
         public string Nombre { get; set; }
         public int EstadoActual { get; set; }
         public int StateLess { get; set; }
+
+        public String Descripcion
+        {
+            get
+            {
+                return "E" + Estanteria +"-M" + Modulo + "-N" + Nivel+"-B"+Bancal;
+            }
+        }
     }
 }

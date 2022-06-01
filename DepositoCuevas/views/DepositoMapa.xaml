@@ -30,7 +30,7 @@
         </Grid>
 
 
-        <Viewbox Stretch="Uniform" Visibility="{Binding Path=VisibilityHelper.Mapa}">
+        <Viewbox Grid.Row="2" Stretch="Uniform" Visibility="{Binding Path=VisibilityHelper.Mapa}">
             <Viewbox.RenderTransform>
                 <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
             </Viewbox.RenderTransform>
@@ -44,7 +44,7 @@
                 
         </Viewbox>
 
-        <Viewbox Stretch="Uniform" Visibility="{Binding Path=VisibilityHelper.Estanteria}">
+        <Viewbox  Grid.Row="2" Stretch="Uniform" Visibility="{Binding Path=VisibilityHelper.Estanteria}">
             <Viewbox.RenderTransform>
                 <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
             </Viewbox.RenderTransform>
@@ -53,7 +53,7 @@
                 <Canvas.LayoutTransform>
                     <ScaleTransform />
                 </Canvas.LayoutTransform>
-                
+                <TextBlock Text="{Binding Path=TextHelper.BancalHoverDescripcion}" Canvas.Left="5" Canvas.Top="5" />
             </Canvas>
 
         </Viewbox>

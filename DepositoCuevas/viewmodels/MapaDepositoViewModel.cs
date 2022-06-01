@@ -1,4 +1,5 @@
-﻿using DepositoCuevas.classes;
+﻿using DepositoClassLibrary.DTO;
+using DepositoCuevas.classes;
 using DepositoCuevas.viewmodels.helpers;
 using System;
 using System.Collections.Generic;
@@ -128,6 +129,18 @@ namespace DepositoCuevas.viewmodels
         private void drawEstanteriaView(ModuloUbicacion ubicacion)
         {
             EstanteriaViewVisualHandler handler = new EstanteriaViewVisualHandler(ubicacion, estanteriaCanvas, medidasHelper);
+            handler.OnHover += handlerBancalHover;
+        }
+
+        private void handlerBancalHover(UbicacionDTO ubicacion)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Estanteria " + ubicacion.Estanteria);
+            sb.Append(" Modulo " + ubicacion.Modulo);
+            sb.Append(" Nivel " + ubicacion.Nivel);
+            sb.Append(" Bancal " + ubicacion.Bancal);
+
+            textHelper.BancalHoverDescripcion = sb.ToString();
         }
 
 

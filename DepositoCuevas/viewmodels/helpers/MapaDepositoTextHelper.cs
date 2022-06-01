@@ -32,5 +32,14 @@ namespace DepositoCuevas.viewmodels.helpers
             set { moduloHoverDescripcion = value; NotifyPropertyChanged("ModuloHoverDescripcion"); }
         }
 
+        private string bancalHoverDescripcion;
+
+        public string BancalHoverDescripcion
+        {
+            get { return bancalHoverDescripcion; }
+            set { bancalHoverDescripcion = value; NotifyPropertyChanged("BancalHoverDescripcion"); }
+        }
+
+
     }
 }
