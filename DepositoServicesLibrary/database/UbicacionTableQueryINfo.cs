@@ -15,11 +15,11 @@ namespace DepositoServicesLibrary.database
         }
         public override string UpdateString
         {
-            get { return " Coidgo = @Codigo "; }
+            get { return " update ubicaciones set estanteria = @Estanteria, modulo=@Modulo, nivel = @Nivel, bancal = @Bancal, nombre = @nombre, estado_actual = @EstadoActual "; }
         }
         public override string SelectOneString
         {
-            get { return " Coidgo = @Codigo "; }
+            get { return " Codigo = @Codigo "; }
         }
         public override string SelectString
         {

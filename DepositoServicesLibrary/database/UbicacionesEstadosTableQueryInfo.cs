@@ -15,11 +15,11 @@ namespace DepositoServicesLibrary.database
         }
         public override string UpdateString
         {
-            get { return " Coidgo = @Codigo "; }
+            get { return " fecha = @Fecha, movimiento_id = @MovimientoId, ubicacion_id = @UbicacionId "; }
         }
         public override string SelectOneString
         {
-            get { return " Coidgo = @Codigo "; }
+            get { return " Codigo = @Codigo "; }
         }
         public override string SelectString
         {
@@ -27,7 +27,7 @@ namespace DepositoServicesLibrary.database
         }
         public override string InsertString
         {
-            get { return "insert into ubicaciones_estados (fecha, movimiento_id, ubicacion_id) values (@Fecha, @MovimientoId, @UbicacionId)"; }
+            get { return "insert into ubicaciones_estados (fecha, movimiento_id, ubicacion_id, numero) values (@Fecha, @MovimientoId, @UbicacionId, @Numero)"; }
         }
         public override int getId(object ubicacionesEstadosDTO)
         {
@@ -35,7 +35,7 @@ namespace DepositoServicesLibrary.database
         }
         public override string duclicityString
         {
-            get { return "fecha = @Fecha AND movimiento_id = @MovimientoId AND ubicacion_id = @UbicacionId"; }
+            get { return "fecha = @Fecha AND movimiento_id = @MovimientoId AND ubicacion_id = @UbicacionId AND numero = @Numero "; }
         }
         public override Dictionary<String, object> getDuplicityParameters(object obj)
         {
@@ -44,6 +44,7 @@ namespace DepositoServicesLibrary.database
             dictionary.Add("@Fecha", ubicacionesEstadosDTO.Fecha);
             dictionary.Add("@MovimientoId", ubicacionesEstadosDTO.MovimientoId);
             dictionary.Add("@UbicacionId", ubicacionesEstadosDTO.UbicacionId);
+            dictionary.Add("@Numero", ubicacionesEstadosDTO.Numero);
 
 
             return dictionary;

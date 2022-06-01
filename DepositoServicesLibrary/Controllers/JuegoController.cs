@@ -84,14 +84,14 @@ namespace DepositoServicesLibrary.Controllers
             return movimiento;
         }
 
-        public static Juego addMovimiento(UbicacionDTO origen, UbicacionDTO destino, Juego juego, int cantidad)
+        public static Tuple<Juego, MovimientoJuegoDTO> addMovimiento(UbicacionDTO origen, UbicacionDTO destino, Juego juego, int cantidad)
         {
             
             MovimientoJuegoDTO nuevoMovimiento = crearNuevoMovimiento(origen, destino,juego, cantidad);
             movimientoJuegoDataAccess.save(nuevoMovimiento);
             juego.setCantidad(nuevoMovimiento.Saldo);
 
-            return update(juego);
+            return new Tuple<Juego, MovimientoJuegoDTO>(update(juego), nuevoMovimiento);
         }
 
         public static List<MovimientoJuegoDTO> getMovimientos(Juego juego ) {

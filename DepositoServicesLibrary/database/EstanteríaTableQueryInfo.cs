@@ -13,11 +13,11 @@ namespace DepositoServicesLibrary.database
         }
         public override string UpdateString
         {
-            get { return " Coidgo = @Codigo "; }
+            get { return " Codigo = @Codigo "; }
         }
         public override string SelectOneString
         {
-            get { return " Coidgo = @Codigo "; }
+            get { return " Codigo = @Codigo "; }
         }
         public override string SelectString
         {

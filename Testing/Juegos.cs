@@ -82,7 +82,13 @@ namespace DepositoLibTesting
                 Bancal = 2
             });
 
-            Juego juegoModificado = JuegoController.addMovimiento(origen, destino, juego, rnd.Next(5, 200));
+            //Tuple<Juego, MovimientoJuegoDTO> tuple = JuegoController.addMovimiento(origen, destino, juego, rnd.Next(5, 200));
+
+            var result = UbicacionController.moveFromOneUbicacionToAnother(origen, destino, juego, rnd.Next(5, 200));
+            
+
+            result = UbicacionController.moveFromOneUbicacionToAnother(origen, destino, juego, rnd.Next(5, 200));
+            Juego juegoModificado = result.Item1;
 
             Assert.GreaterOrEqual(juegoModificado.getCantidad(), juego.getCantidad());
         }
@@ -94,5 +100,14 @@ namespace DepositoLibTesting
             Console.WriteLine("COUNT " + lista.Count);
             Assert.Greater(lista.Count, 0);
         }
+
+        [Test]
+
+        public void LoadUbicaciones()
+        {
+            
+        }
+
+
     }
 }

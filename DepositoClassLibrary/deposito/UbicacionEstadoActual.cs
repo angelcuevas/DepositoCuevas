@@ -15,7 +15,7 @@ namespace DepositoClassLibrary.deposito
         public UbicacionesEstadosDTO estado;
         public bool isStateLess = false;
 
-        private List<JuegoEstadoCantidad> cantidades;
+        private List<JuegoEstadoCantidad> cantidades = new List<JuegoEstadoCantidad>();
         public List<JuegoEstadoCantidad> Cantidades
         {
             get { return cantidades; }

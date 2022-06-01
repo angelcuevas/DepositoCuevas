@@ -11,23 +11,23 @@ namespace DepositoServicesLibrary.database
     {
         public override string tableName
         {
-            get { return "ubicaciones_estados_juegos"; }
+            get { return "juegos_cantidad"; }
         }
         public override string UpdateString
         {
-            get { return " Coidgo = @Codigo "; }
+            get { return " Codigo = @Codigo "; }
         }
         public override string SelectOneString
         {
-            get { return " Coidgo = @Codigo "; }
+            get { return " Codigo = @Codigo "; }
         }
         public override string SelectString
         {
-            get { return "select * from ubicaciones_estados_juegos"; }
+            get { return "select * from juegos_cantidad"; }
         }
         public override string InsertString
         {
-            get { return "insert into ubicaciones_estados_juegos (juego_id, cantidad) values (@JuegoId, @Cantidad)"; }
+            get { return "insert into juegos_cantidad (juego_id, cantidad) values (@JuegoId, @Cantidad)"; }
         }
         public override int getId(object ubicacionesEstadosJuegosDTO)
         {
@@ -41,7 +41,8 @@ namespace DepositoServicesLibrary.database
         {
             JuegoCantidadDTO ubicacionesEstadosJuegosDTO = obj as JuegoCantidadDTO;
             Dictionary<String, object> dictionary = new Dictionary<String, object>();
-
+            //dictionary.Add("@JuegoId", ubicacionesEstadosJuegosDTO.JuegoId);
+            //dictionary.Add("@Cantidad", ubicacionesEstadosJuegosDTO.Cantidad);
 
             return dictionary;
         }

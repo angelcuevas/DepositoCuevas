@@ -13,7 +13,7 @@ namespace DepositoClassLibrary.DTOscombinados
         public int JuegosCantidadId { get; set; }
 
         public int JuegoId { get; set; }
-        public int Cantidad { get; set; }
+        public int JcCantidad { get; set; }
 
         public string Codigo  { get; set; }
         public string Descripcion { get; set; }

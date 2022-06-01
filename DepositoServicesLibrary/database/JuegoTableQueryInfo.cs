@@ -14,7 +14,7 @@ namespace DepositoServicesLibrary.database
         }
         public override string SelectOneString
         {
-            get { return " Coidgo = @Codigo "; }
+            get { return " Codigo = @Codigo "; }
         }
         public override string SelectString
         {
