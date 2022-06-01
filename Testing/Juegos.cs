@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using DepositoServicesLibrary;
+using System.IO;
+using ExcelDataReader;
 
 namespace DepositoLibTesting
 {
@@ -16,6 +18,8 @@ namespace DepositoLibTesting
         [SetUp]
         public void Setup()
         {
+            LoadUbicaciones();
+            addJuegos();
             try
             {
                 JuegoDTO juegoDTO = new JuegoDTO() { Codigo = "4050", Descripcion = "No se repite" };
@@ -102,7 +106,7 @@ namespace DepositoLibTesting
             Assert.Greater(lista.Count, 0);
         }
 
-        [Test]
+  
 
         public void LoadUbicaciones()
         {
@@ -144,6 +148,51 @@ namespace DepositoLibTesting
                             Bancal = b +1
                         });
                     }
+                }
+            }
+        }
+
+        //[Test]
+        public void addJuegos()
+        {
+            SqliteDataAccess<JuegoDTO> dataAccess = new SqliteDataAccess<JuegoDTO>();
+
+            using (var stream = File.Open(@"c:\juegos.xls", FileMode.Open, FileAccess.Read))
+            {
+                // Auto-detect format, supports:
+                //  - Binary Excel files (2.0-2003 format; *.xls)
+                //  - OpenXml Excel files (2007 format; *.xlsx, *.xlsb)
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    // Choose one of either 1 or 2:
+
+                    // 1. Use the reader methods
+                    do
+                    {
+                        while (reader.Read())
+                        {
+                            // reader.GetDouble(0);
+                            string a = reader.GetString(0);
+                            string b = reader.GetString(1);
+
+                            if(b.ToLower().IndexOf("semi") > 0 && b.ToLower().IndexOf("terminado") > 0)
+                            {
+                                a = a + " - Semi";
+                            }
+
+                            dataAccess.save(new JuegoDTO()
+                            {
+                                Codigo = a,
+                                Descripcion = b.ToUpperInvariant(),
+                            });
+
+                        }
+                    } while (reader.NextResult());
+
+                    // 2. Use the AsDataSet extension method
+                    //var result = reader.AsDataSet();
+                    //Console.Write(result.ToString());
+                    // The result of each spreadsheet is in result.Tables
                 }
             }
         }
