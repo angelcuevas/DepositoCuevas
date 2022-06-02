@@ -39,20 +39,20 @@ namespace DepositoServicesLibrary.Controllers
             return ubicacionesEstadosJuegosDTO;
         }
 
-        public static Tuple<Juego,UbicacionEstadoActual, UbicacionEstadoActual, MovimientoDTO> moveFromOneUbicacionToAnother(UbicacionDTO origen, UbicacionDTO destino, Juego juego, int cantidad)
+        public static Tuple<Juego,UbicacionEstadoActual, UbicacionEstadoActual, MovimientoDTO> moveFromOneUbicacionToAnother(UbicacionDTO origen, UbicacionDTO destino, JuegoEstadoCantidad infoJuego)
         {
 
             UbicacionEstadoActual origenEstado = getUbicacionYEstadoActual(origen);
             UbicacionEstadoActual destinoEstado = getUbicacionYEstadoActual(destino);
 
-            Tuple<Juego, MovimientoJuegoDTO> movimientoResponse = JuegoController.addMovimiento(origen, destino, juego, cantidad);
+            Tuple<Juego, MovimientoJuegoDTO> movimientoResponse = JuegoController.addMovimiento(origen, destino, infoJuego);
             
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Id", movimientoResponse.Item2.MovimientoId);
             MovimientoDTO movimientoDTO = movimientoDataAccess.getOne(" id = @Id", parameters);
 
-            UbicacionEstadoActual nuevoEstadoOrigen = createNewStateFromOldOne(origenEstado, movimientoDTO, juego.getJuego(), cantidad * -1);
-            UbicacionEstadoActual nuevoEstadoDestino = createNewStateFromOldOne(destinoEstado, movimientoDTO, juego.getJuego(), cantidad);
+            UbicacionEstadoActual nuevoEstadoOrigen = createNewStateFromOldOne(origenEstado, movimientoDTO, infoJuego, TipoMovimiento.EGRESO);
+            UbicacionEstadoActual nuevoEstadoDestino = createNewStateFromOldOne(destinoEstado, movimientoDTO, infoJuego, TipoMovimiento.INGRESO);
 
 
             return new Tuple<Juego, UbicacionEstadoActual, UbicacionEstadoActual, MovimientoDTO>(
@@ -141,15 +141,20 @@ namespace DepositoServicesLibrary.Controllers
             parameters.Add("@Id", id);
             return ubicacionEstadoDataAccess.getOne(" id = @Id", parameters);
         }
-    
-        public static UbicacionEstadoActual createNewStateFromOldOne(UbicacionEstadoActual estadoActual, MovimientoDTO movimiento, JuegoDTO juego, int cantidad)
+        public enum TipoMovimiento
+        {
+            INGRESO,
+            EGRESO 
+        }
+
+        public static UbicacionEstadoActual createNewStateFromOldOne(UbicacionEstadoActual estadoActual, MovimientoDTO movimiento, JuegoEstadoCantidad juegoInfo, TipoMovimiento tipoMovimiento)
         {
             if (estadoActual.Ubicacion.StateLess == 1)
             {
                 return estadoActual;
             }
 
-            JuegoEstadoCantidad juegoEstadoCantidad = estadoActual.Cantidades.Find(c => c.JuegoDTO.Id == juego.Id);
+            JuegoEstadoCantidad juegoEstadoCantidad = estadoActual.Cantidades.Find(c => c.JuegoDTO.Id == juegoInfo.JuegoDTO.Id);
             
             UbicacionesEstadosDTO nuevoEstado = createNewEstadoConFechaYHoraActual(estadoActual, movimiento);
 
@@ -157,8 +162,8 @@ namespace DepositoServicesLibrary.Controllers
 
             JuegoCantidadDTO nuevoJuegoCantidad = new JuegoCantidadDTO()
             {
-                JuegoId = juego.Id,
-                Cantidad = (juegoEstadoCantidad != null) ? juegoEstadoCantidad.JuegoCantidadDTO.Cantidad + cantidad : cantidad
+                JuegoId = juegoInfo.JuegoDTO.Id,
+                Cantidad = getCantidadSegunTipoMovimiento(juegoEstadoCantidad, juegoInfo, tipoMovimiento)
             };
 
             nuevoJuegoCantidad.Id = juegoCantidadDataAccess.save(nuevoJuegoCantidad);
@@ -176,7 +181,7 @@ namespace DepositoServicesLibrary.Controllers
             estadoActual.Cantidades.ForEach(c =>
             {
 
-                if(c.JuegoDTO.Id != juego.Id)
+                if(c.JuegoDTO.Id != juegoInfo.JuegoCantidadDTO.Id)
                 {
                     estadoJuegoCantidadDataAccess.save(new UbicacionesEstadosJuegosDTO()
                     {
@@ -190,6 +195,18 @@ namespace DepositoServicesLibrary.Controllers
 
 
             return getUbicacionYEstadoActual(estadoActual.Ubicacion);
+        }
+
+        public static int getCantidadSegunTipoMovimiento(JuegoEstadoCantidad estadoAnterior, JuegoEstadoCantidad juegoInfo, TipoMovimiento tipoMovimiento)
+        {
+            int cantidad = juegoInfo.JuegoCantidadDTO.Cantidad;
+
+            if(tipoMovimiento == TipoMovimiento.EGRESO)
+            {
+                cantidad = cantidad * -1;
+            }
+
+            return (estadoAnterior != null) ? estadoAnterior.JuegoCantidadDTO.Cantidad + cantidad : cantidad;
         }
 
         public static UbicacionesEstadosDTO createNewEstadoConFechaYHoraActual(UbicacionEstadoActual estadoActual, MovimientoDTO movimiento)

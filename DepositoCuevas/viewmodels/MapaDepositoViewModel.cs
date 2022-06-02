@@ -173,7 +173,12 @@ namespace DepositoCuevas.viewmodels
 
         private void handlerBancalClick(UbicacionDTO ubicacion)
         {
-            UbicacionContenido= new UbicacionContenidoVM(ubicacion);
+            openContenidoView(ubicacion);
+        }
+
+        private void openContenidoView(UbicacionDTO ubicacion)
+        {
+            UbicacionContenido = new UbicacionContenidoVM(ubicacion);
             UbicacionContenido.onIngresarClicked += handleIngresarClicked;
             visibilityHelper.goToView(depositoMapaVistas.contenido);
         }
@@ -181,7 +186,15 @@ namespace DepositoCuevas.viewmodels
         private void handleIngresarClicked(UbicacionEstadoActual estado)
         {
             visibilityHelper.goToView(depositoMapaVistas.ingresoDeLinea);
-            MovUbicacionVM = new MovimientoUbicacionVM();
+            MovUbicacionVM = new MovimientoUbicacionVM(estado);
+            MovUbicacionVM.onReloadContenido += handleReloadContenido;
+        }
+
+        private void handleReloadContenido(UbicacionDTO ubicacion)
+        {
+            visibilityHelper.goToPrevious();
+            visibilityHelper.goToPrevious();
+            openContenidoView(ubicacion);
         }
 
         public AnotherCommandImplementation MovePrevCommand

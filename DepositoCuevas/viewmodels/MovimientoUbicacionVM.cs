@@ -1,4 +1,5 @@
-﻿using DepositoClassLibrary.DTO;
+﻿using DepositoClassLibrary.deposito;
+using DepositoClassLibrary.DTO;
 using DepositoClassLibrary.juegos;
 using DepositoCuevas.Commands;
 using DepositoServicesLibrary.Controllers;
@@ -14,6 +15,7 @@ using System.Windows;
 
 namespace DepositoCuevas.viewmodels
 {
+    public delegate void reloadContenidoDelegate(UbicacionDTO ubicacion);  // delegate
     public class MovimientoUbicacionVM :INotifyPropertyChanged
     {
         #region InotifyPropertyChanged
@@ -30,6 +32,8 @@ namespace DepositoCuevas.viewmodels
             }
         }
         #endregion
+
+        public event reloadContenidoDelegate onReloadContenido; // event
 
         private JuegoDTO juegoBuscado;
 
@@ -64,10 +68,10 @@ namespace DepositoCuevas.viewmodels
             get { return cantidad; }
             set { cantidad = digitsOnly.Replace(value, ""); NotifyPropertyChanged("Cantidad"); }
         }
-
-        public MovimientoUbicacionVM()
+        private UbicacionEstadoActual estado;
+        public MovimientoUbicacionVM(UbicacionEstadoActual estado)
         {
-
+            this.estado = estado;
         }
 
         private void findJuegoByCodigo()
@@ -124,8 +128,28 @@ namespace DepositoCuevas.viewmodels
 
         private void saveMovimiento()
         {
+            UbicacionDTO origen = UbicacionController.getUbicacionFromDB(new UbicacionDTO()
+            {
+                Estanteria = "1",
+                Modulo = "1",
+                Nivel = 1,
+                Bancal = 1
+            });
+
+            UbicacionDTO destino = estado.Ubicacion;
+
+            try
+            {
+                var result = UbicacionController.moveFromOneUbicacionToAnother(origen, destino, ListaDeJuegos[0]);
+                onReloadContenido.Invoke(estado.Ubicacion);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             
-            //UbicacionController.moveFromOneUbicacionToAnother()
+            
         }
 
         public AnotherCommandImplementation searchCodigoCommand

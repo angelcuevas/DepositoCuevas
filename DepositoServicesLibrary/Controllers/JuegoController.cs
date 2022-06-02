@@ -52,25 +52,25 @@ namespace DepositoServicesLibrary.Controllers
             return new Juego(juego);
         } 
 
-        public static Juego update(Juego juego)
+        public static Juego update(JuegoDTO juego)
         {
-            dataAccess.update(juego.getJuego(), " id = @Id");
-            return getOne(juego.getJuego().Codigo);
+            dataAccess.update(juego, " id = @Id");
+            return getOne(juego.Codigo);
         }
         public static int crearMovimiento(int ubicacionOrigen, int ubicacionDestino)
         {
             MovimientoDTO movimiento = new MovimientoDTO() {Fecha = DateTime.Now.ToLocalTime(), UbicacionOrigen = ubicacionOrigen, UbicacionDestino = ubicacionDestino, Comentario = ""  } ;
             return movimientoDataAccess.save(movimiento);
         }
-        public static MovimientoJuegoDTO crearNuevoMovimiento(UbicacionDTO origen, UbicacionDTO destino, Juego juego, int cantidad)
+        public static MovimientoJuegoDTO crearNuevoMovimiento(UbicacionDTO origen, UbicacionDTO destino, JuegoEstadoCantidad juegoInfo)
         {
-            List<MovimientoJuegoDTO> lista = movimientoJuegoDataAccess.getAll(" juego_id = " + juego.getJuego().Id);
+            List<MovimientoJuegoDTO> lista = movimientoJuegoDataAccess.getAll(" juego_id = " + juegoInfo.JuegoDTO.Id);
 
             MovimientoJuegoDTO movimiento = new MovimientoJuegoDTO();
             int id = crearMovimiento(origen.Id, destino.Id);
 
             movimiento.MovimientoId = id;
-            movimiento.JuegoId = juego.getJuego().Id;
+            movimiento.JuegoId = juegoInfo.JuegoDTO.Id;
             
             if(lista.Count > 0)
             {
@@ -78,20 +78,21 @@ namespace DepositoServicesLibrary.Controllers
                 movimiento.SaldoAnterior = ultimo.Saldo; 
 
             }
-            movimiento.Cantidad = cantidad;
+            movimiento.Cantidad = juegoInfo.JuegoCantidadDTO.Cantidad;
             movimiento.Saldo = movimiento.SaldoAnterior + movimiento.Cantidad;
 
             return movimiento;
         }
 
-        public static Tuple<Juego, MovimientoJuegoDTO> addMovimiento(UbicacionDTO origen, UbicacionDTO destino, Juego juego, int cantidad)
+        public static Tuple<Juego, MovimientoJuegoDTO> addMovimiento(UbicacionDTO origen, UbicacionDTO destino, JuegoEstadoCantidad juegoInfo)
         {
             
-            MovimientoJuegoDTO nuevoMovimiento = crearNuevoMovimiento(origen, destino,juego, cantidad);
+            MovimientoJuegoDTO nuevoMovimiento = crearNuevoMovimiento(origen, destino, juegoInfo);
             movimientoJuegoDataAccess.save(nuevoMovimiento);
-            juego.setCantidad(nuevoMovimiento.Saldo);
+            juegoInfo.JuegoDTO.Cantidad = nuevoMovimiento.Saldo;
+            
 
-            return new Tuple<Juego, MovimientoJuegoDTO>(update(juego), nuevoMovimiento);
+            return new Tuple<Juego, MovimientoJuegoDTO>(update(juegoInfo.JuegoDTO), nuevoMovimiento);
         }
 
         public static List<MovimientoJuegoDTO> getMovimientos(Juego juego ) {

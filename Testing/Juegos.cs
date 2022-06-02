@@ -57,7 +57,7 @@ namespace DepositoLibTesting
             Console.WriteLine("cantidadOriginal " + cantidadOriginal);
             try
             {
-                Juego juegoCambiado = JuegoController.update(juego);
+                Juego juegoCambiado = JuegoController.update(juego.getJuego());
                 Assert.AreNotEqual(cantidadOriginal, juegoCambiado.getCantidad());
             }
             catch (Exception e)
@@ -89,10 +89,24 @@ namespace DepositoLibTesting
 
             //Tuple<Juego, MovimientoJuegoDTO> tuple = JuegoController.addMovimiento(origen, destino, juego, rnd.Next(5, 200));
 
-            var result = UbicacionController.moveFromOneUbicacionToAnother(origen, destino, juego, rnd.Next(5, 200));
+            var result = UbicacionController.moveFromOneUbicacionToAnother(origen, destino, new JuegoEstadoCantidad()
+            {
+                JuegoCantidadDTO = new JuegoCantidadDTO()
+                {
+                    Cantidad = rnd.Next(5, 200)
+                },
+                JuegoDTO = juego.getJuego()
+            });
             
 
-            result = UbicacionController.moveFromOneUbicacionToAnother(origen, destino, juego, rnd.Next(5, 200));
+            result = UbicacionController.moveFromOneUbicacionToAnother(origen, destino, new JuegoEstadoCantidad()
+            {
+                JuegoCantidadDTO = new JuegoCantidadDTO()
+                {
+                    Cantidad = rnd.Next(5, 200)
+                },
+                JuegoDTO = juego.getJuego()
+            });
             Juego juegoModificado = result.Item1;
 
             Assert.GreaterOrEqual(juegoModificado.getCantidad(), juego.getCantidad());
