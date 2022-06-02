@@ -36,12 +36,12 @@ namespace DepositoClassLibrary.DTOscombinados
         private int ubicacionOrigen;
         private int ubicacionDestino;
         private DateTime fecha;
-        private string comentario;
+        private string comentarios;
         //public int MovimientoId { get; set; }
         public int UbicacionOrigen { get; set; }
         public int UbicacionDestino { get; set; }
         public DateTime Fecha { get; set; }
-        public string Comentario { get; set; }
+        public string Comentarios { get; set; }
 
         private int ubicacionDestinoId;
         private int nivel;

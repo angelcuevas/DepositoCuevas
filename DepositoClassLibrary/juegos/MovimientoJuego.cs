@@ -54,6 +54,12 @@ namespace DepositoClassLibrary.juegos
             set { ubicacionDestinoDTO = value; NotifyPropertyChanged("UbicacionDestinoDTO"); }
         }
 
+        private MovimientoDTO movimientoDTO;
+        public MovimientoDTO MovimientoDTO
+        {
+            get { return movimientoDTO; }
+            set { movimientoDTO = value; NotifyPropertyChanged("MovimientoDTO"); }
+        }
 
     }
 }

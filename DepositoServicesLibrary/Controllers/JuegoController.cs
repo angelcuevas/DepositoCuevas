@@ -121,7 +121,7 @@ namespace DepositoServicesLibrary.Controllers
         {
 
             //Slapper.AutoMapper.Map<Customer>(list);
-            List<Movimiento> lista = SqliteDataAccess<Movimiento>.query("SELECT mj.id AS movimientoJuegoId, mj.cantidad as MovimientoJuegoCantidad, mj.*, j.*, m.*, ud.*, ud.id AS ubicacionDestinoId, uo.id AS ubicacionOrigenId, uo.nivel as nivelOrigen, uo.estanteria as estanteriaOrigen, uo.modulo as ModuloOrigen, uo.bancal as bancalOrigen, uo.nombre as nombreOrigen  FROM movimientos_juego as mj LEFT JOIN juegos as j ON j.id = mj.juego_id LEFT JOIN movimientos as m ON m.id = mj.movimiento_id LEFT JOIN ubicaciones as ud ON ud.id = m.ubicacion_destino LEFT JOIN ubicaciones as uo ON uo.id = m.ubicacion_origen  WHERE j.codigo = " + juego.getJuego().Codigo);
+            List<Movimiento> lista = SqliteDataAccess<Movimiento>.query("SELECT mj.id AS movimientoJuegoId, mj.cantidad as MovimientoJuegoCantidad, mj.*, j.*, m.*, ud.*, ud.id AS ubicacionDestinoId, uo.id AS ubicacionOrigenId, uo.nivel as nivelOrigen, uo.estanteria as estanteriaOrigen, uo.modulo as ModuloOrigen, uo.bancal as bancalOrigen, uo.nombre as nombreOrigen, m.fecha, m.comentarios  FROM movimientos_juego as mj LEFT JOIN juegos as j ON j.id = mj.juego_id LEFT JOIN movimientos as m ON m.id = mj.movimiento_id LEFT JOIN ubicaciones as ud ON ud.id = m.ubicacion_destino LEFT JOIN ubicaciones as uo ON uo.id = m.ubicacion_origen WHERE j.codigo = " + juego.getJuego().Codigo);
 
             return lista.Select(l => new MovimientoJuego()
             {
@@ -159,6 +159,11 @@ namespace DepositoServicesLibrary.Controllers
                     Bancal = l.Bancal,
                     Nivel = l.Nivel
 
+                },
+                MovimientoDTO = new MovimientoDTO()
+                {
+                    Fecha = l.Fecha,
+                    Comentario = l.Comentarios
                 }
                 
             }).ToList<MovimientoJuego>();

@@ -68,7 +68,12 @@
                 
                  >
                 <DataGrid.Columns>
-
+                    
+                    <DataGridTextColumn
+                        Binding="{Binding Path=MovimientoDTO.Fecha}"
+                        Header="Fecha"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                    />
                     <DataGridTextColumn
                         Binding="{Binding Path=UbicacionOrigenDTO.Descripcion}"
                         Header="Origen"
@@ -113,6 +118,12 @@
                     <DataGridTextColumn
                         Binding="{Binding Path=MovimientoJuegoDTO.Saldo}"
                         Header="Saldo"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                    />
+
+                    <DataGridTextColumn
+                        Binding="{Binding Path=MovimientoDTO.Comentarios}"
+                        Header="Comentarios"
                         ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                     />
 
