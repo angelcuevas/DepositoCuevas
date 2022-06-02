@@ -27,7 +27,7 @@ namespace DepositoServicesLibrary.database
         }
         public override string InsertString
         {
-            get { return "insert into ubicaciones (estanteria, modulo, nivel, bancal, nombre) values (@Estanteria, @Modulo, @Nivel, @Bancal, @Nombre)"; }
+            get { return "insert into ubicaciones (estanteria, modulo, nivel, bancal, nombre, is_creator, is_destructor) values (@Estanteria, @Modulo, @Nivel, @Bancal, @Nombre, @IsCreator, @IsDestructor)"; }
         }
         public override int getId(object ubicacion)
         {
@@ -35,7 +35,7 @@ namespace DepositoServicesLibrary.database
         }
 
         public override string duclicityString {
-            get { return " estanteria = @Estanteria AND modulo = @Modulo AND nivel = @Nivel AND bancal = @Bancal "; }
+            get { return " estanteria = @Estanteria AND modulo = @Modulo AND nivel = @Nivel AND bancal = @Bancal AND is_creator = @IsCreator AND is_destructor = @IsDestructor "; }
         }
         public override Dictionary<String, object> getDuplicityParameters(object obj)
         {
@@ -45,6 +45,8 @@ namespace DepositoServicesLibrary.database
             dictionary.Add("@Modulo", ubicacion.Modulo);
             dictionary.Add("@Nivel", ubicacion.Nivel);
             dictionary.Add("@Bancal", ubicacion.Bancal);
+            dictionary.Add("@IsCreator", ubicacion.IsCreator);
+            dictionary.Add("@IsDestructor", ubicacion.IsDestructor);
             return dictionary;
         }
 

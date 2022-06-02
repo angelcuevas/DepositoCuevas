@@ -130,17 +130,16 @@ namespace DepositoCuevas.viewmodels
         {
             UbicacionDTO origen = UbicacionController.getUbicacionFromDB(new UbicacionDTO()
             {
-                Estanteria = "1",
-                Modulo = "1",
-                Nivel = 1,
-                Bancal = 1
+                Nombre = "linea",
+                StateLess = 1
+
             });
 
             UbicacionDTO destino = estado.Ubicacion;
 
             try
             {
-                var result = UbicacionController.moveFromOneUbicacionToAnother(origen, destino, ListaDeJuegos[0]);
+                var result = UbicacionController.moveFromOneUbicacionToAnother(origen, destino, ListaDeJuegos.ToList());
                 onReloadContenido.Invoke(estado.Ubicacion);
             }
             catch (Exception)

@@ -26,6 +26,16 @@ namespace DepositoCuevas.viewmodels
             set { estado = value; }
         }
 
+        public string GetNumeroDeEstadoDescripcion
+        {
+            get {
+                if (Estado == null || Estado.estado == null) return " Estado nº 0";
+
+                return "Estado nº " + Estado.estado.Numero;
+
+            }
+        }
+
         public UbicacionContenidoVM(UbicacionDTO ubicacion)
         {
             if(ubicacion.Id == 0)

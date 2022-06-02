@@ -67,6 +67,8 @@
 
         </StackPanel>
 
+        <TextBlock Grid.Row="1" Text="{Binding Path=GetNumeroDeEstadoDescripcion}" />
+
         <Grid Grid.Row="2">
             <DataGrid
                 ItemsSource="{Binding Path = Estado.Cantidades}"

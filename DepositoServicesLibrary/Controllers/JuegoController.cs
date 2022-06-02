@@ -62,14 +62,13 @@ namespace DepositoServicesLibrary.Controllers
             MovimientoDTO movimiento = new MovimientoDTO() {Fecha = DateTime.Now.ToLocalTime(), UbicacionOrigen = ubicacionOrigen, UbicacionDestino = ubicacionDestino, Comentario = ""  } ;
             return movimientoDataAccess.save(movimiento);
         }
-        public static MovimientoJuegoDTO crearNuevoMovimiento(UbicacionDTO origen, UbicacionDTO destino, JuegoEstadoCantidad juegoInfo)
+        public static MovimientoJuegoDTO crearNuevoMovimiento(UbicacionDTO origen, UbicacionDTO destino, JuegoEstadoCantidad juegoInfo, int movimientoId)
         {
             List<MovimientoJuegoDTO> lista = movimientoJuegoDataAccess.getAll(" juego_id = " + juegoInfo.JuegoDTO.Id);
 
             MovimientoJuegoDTO movimiento = new MovimientoJuegoDTO();
-            int id = crearMovimiento(origen.Id, destino.Id);
 
-            movimiento.MovimientoId = id;
+            movimiento.MovimientoId = movimientoId;
             movimiento.JuegoId = juegoInfo.JuegoDTO.Id;
             
             if(lista.Count > 0)
@@ -84,10 +83,10 @@ namespace DepositoServicesLibrary.Controllers
             return movimiento;
         }
 
-        public static Tuple<Juego, MovimientoJuegoDTO> addMovimiento(UbicacionDTO origen, UbicacionDTO destino, JuegoEstadoCantidad juegoInfo)
+        public static Tuple<Juego, MovimientoJuegoDTO> addMovimiento(UbicacionDTO origen, UbicacionDTO destino, JuegoEstadoCantidad juegoInfo, int movimientoId)
         {
             
-            MovimientoJuegoDTO nuevoMovimiento = crearNuevoMovimiento(origen, destino, juegoInfo);
+            MovimientoJuegoDTO nuevoMovimiento = crearNuevoMovimiento(origen, destino, juegoInfo, movimientoId);
             movimientoJuegoDataAccess.save(nuevoMovimiento);
             juegoInfo.JuegoDTO.Cantidad = nuevoMovimiento.Saldo;
             

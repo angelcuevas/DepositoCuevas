@@ -14,6 +14,8 @@ namespace DepositoClassLibrary.DTO
         private string nombre;
         private int estadoActual;
         private int stateLess;
+        private int isCreator;
+        private int isDestructor;
 
         public int Id { get; set; }
         public int Nivel { get; set; }
@@ -24,13 +26,21 @@ namespace DepositoClassLibrary.DTO
         public int EstadoActual { get; set; }
         public int StateLess { get; set; }
 
+        public int IsCreator { get; set; }
+        public int IsDestructor { get; set; }
+
         public String Descripcion
         {
             get
             {
-                if(Estanteria != null && Modulo != null && Nivel != null && Bancal != null)
+                if(Estanteria != null && Modulo != null && Nivel >0 && Bancal > 0)
                 {
                     return "E" + Estanteria + "-M" + Modulo + "-N" + Nivel + "-B" + Bancal;
+                }
+
+                if (!String.IsNullOrEmpty(Nombre))
+                {
+                    return Nombre; 
                 }
 
                 return "";

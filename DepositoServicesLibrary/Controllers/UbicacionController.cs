@@ -39,29 +39,44 @@ namespace DepositoServicesLibrary.Controllers
             return ubicacionesEstadosJuegosDTO;
         }
 
-        public static Tuple<Juego,UbicacionEstadoActual, UbicacionEstadoActual, MovimientoDTO> moveFromOneUbicacionToAnother(UbicacionDTO origen, UbicacionDTO destino, JuegoEstadoCantidad infoJuego)
+        public static Tuple<Juego,UbicacionEstadoActual, UbicacionEstadoActual, MovimientoDTO> moveFromOneUbicacionToAnother(UbicacionDTO origen, UbicacionDTO destino, List<JuegoEstadoCantidad> listaJuegos)
         {
 
             UbicacionEstadoActual origenEstado = getUbicacionYEstadoActual(origen);
             UbicacionEstadoActual destinoEstado = getUbicacionYEstadoActual(destino);
 
-            Tuple<Juego, MovimientoJuegoDTO> movimientoResponse = JuegoController.addMovimiento(origen, destino, infoJuego);
-            
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Id", movimientoResponse.Item2.MovimientoId);
-            MovimientoDTO movimientoDTO = movimientoDataAccess.getOne(" id = @Id", parameters);
+            MovimientoDTO movimientoDTO = crearNuevoMovimiento(origen, destino);
 
-            UbicacionEstadoActual nuevoEstadoOrigen = createNewStateFromOldOne(origenEstado, movimientoDTO, infoJuego, TipoMovimiento.EGRESO);
-            UbicacionEstadoActual nuevoEstadoDestino = createNewStateFromOldOne(destinoEstado, movimientoDTO, infoJuego, TipoMovimiento.INGRESO);
+            if(origen.IsCreator == 1) { 
+                listaJuegos.ForEach(j =>
+                {
+                    Tuple<Juego, MovimientoJuegoDTO> movimientoResponse = JuegoController.addMovimiento(origen, destino, j, movimientoDTO.Id);
+                });
+            }
+
+            UbicacionEstadoActual nuevoEstadoOrigen = null;
+            if (origen.StateLess == 0) { 
+                nuevoEstadoOrigen = createNewStateFromOldOne(origenEstado, movimientoDTO, listaJuegos, TipoMovimiento.EGRESO);
+            }
+
+            UbicacionEstadoActual nuevoEstadoDestino = createNewStateFromOldOne(destinoEstado, movimientoDTO, listaJuegos, TipoMovimiento.INGRESO);
 
 
             return new Tuple<Juego, UbicacionEstadoActual, UbicacionEstadoActual, MovimientoDTO>(
             
-                movimientoResponse.Item1,
+                null,
                 nuevoEstadoOrigen,
                 nuevoEstadoDestino,
                 movimientoDTO
             );
+        }
+
+        public static MovimientoDTO crearNuevoMovimiento(UbicacionDTO origen, UbicacionDTO destino )
+        {
+            int movimientoId = JuegoController.crearMovimiento(origen.Id, destino.Id);
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", movimientoId);
+            return movimientoDataAccess.getOne(" id = @Id", parameters);
         }
 
         public static UbicacionEstadoActual getUbicacionYEstadoActual(UbicacionDTO ubicacion )
@@ -147,23 +162,47 @@ namespace DepositoServicesLibrary.Controllers
             EGRESO 
         }
 
-        public static UbicacionEstadoActual createNewStateFromOldOne(UbicacionEstadoActual estadoActual, MovimientoDTO movimiento, JuegoEstadoCantidad juegoInfo, TipoMovimiento tipoMovimiento)
+        public static UbicacionEstadoActual createNewStateFromOldOne(UbicacionEstadoActual estadoActual, MovimientoDTO movimiento, List<JuegoEstadoCantidad> listaJuegos, TipoMovimiento tipoMovimiento)
         {
             if (estadoActual.Ubicacion.StateLess == 1)
             {
                 return estadoActual;
             }
 
-            JuegoEstadoCantidad juegoEstadoCantidad = estadoActual.Cantidades.Find(c => c.JuegoDTO.Id == juegoInfo.JuegoDTO.Id);
-            
             UbicacionesEstadosDTO nuevoEstado = createNewEstadoConFechaYHoraActual(estadoActual, movimiento);
+            //---desde
+            listaJuegos.ForEach(j =>
+            {
+                createNewJuegoCantidad(estadoActual, movimiento, j, tipoMovimiento, nuevoEstado);
+            });
+
+            estadoActual.Cantidades.ForEach(c =>
+            {
+
+                if (!listaJuegos.Any(i=> i.JuegoDTO.Id == c.JuegoDTO.Id) )//c.JuegoDTO.Id != juegoInfo.JuegoCantidadDTO.Id
+                {
+                    estadoJuegoCantidadDataAccess.save(new UbicacionesEstadosJuegosDTO()
+                    {
+                        UbicacionesEstadosId = nuevoEstado.Id,
+                        JuegosCantidadId = c.JuegoCantidadDTO.Id
+                    });
+                }
 
 
+            });
+
+            return getUbicacionYEstadoActual(estadoActual.Ubicacion);
+        }
+
+        public static void createNewJuegoCantidad(UbicacionEstadoActual estadoActual, MovimientoDTO movimiento, JuegoEstadoCantidad juegoInfo, TipoMovimiento tipoMovimiento, UbicacionesEstadosDTO nuevoEstado)
+        {
+            JuegoEstadoCantidad juegoYaExistente = estadoActual.Cantidades.Find(c => c.JuegoDTO.Id == juegoInfo.JuegoDTO.Id);
+            
 
             JuegoCantidadDTO nuevoJuegoCantidad = new JuegoCantidadDTO()
             {
                 JuegoId = juegoInfo.JuegoDTO.Id,
-                Cantidad = getCantidadSegunTipoMovimiento(juegoEstadoCantidad, juegoInfo, tipoMovimiento)
+                Cantidad = getCantidadSegunTipoMovimiento(juegoYaExistente, juegoInfo, tipoMovimiento)
             };
 
             nuevoJuegoCantidad.Id = juegoCantidadDataAccess.save(nuevoJuegoCantidad);
@@ -178,23 +217,7 @@ namespace DepositoServicesLibrary.Controllers
                 JuegosCantidadId = nuevoJuegoCantidad.Id
             });
 
-            estadoActual.Cantidades.ForEach(c =>
-            {
 
-                if(c.JuegoDTO.Id != juegoInfo.JuegoCantidadDTO.Id)
-                {
-                    estadoJuegoCantidadDataAccess.save(new UbicacionesEstadosJuegosDTO()
-                    {
-                        UbicacionesEstadosId = nuevoEstado.Id,
-                        JuegosCantidadId = c.JuegoCantidadDTO.Id
-                    });
-                }
-
-
-            });
-
-
-            return getUbicacionYEstadoActual(estadoActual.Ubicacion);
         }
 
         public static int getCantidadSegunTipoMovimiento(JuegoEstadoCantidad estadoAnterior, JuegoEstadoCantidad juegoInfo, TipoMovimiento tipoMovimiento)
