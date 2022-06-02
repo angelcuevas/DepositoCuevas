@@ -11,7 +11,14 @@ namespace DepositoClassLibrary.deposito
 {
     public class UbicacionEstadoActual
     {
-        public UbicacionDTO ubicacion;
+        private UbicacionDTO ubicacion;
+
+        public UbicacionDTO Ubicacion
+        {
+            get { return ubicacion; }
+            set { ubicacion = value; }
+        }
+
         public UbicacionesEstadosDTO estado;
         public bool isStateLess = false;
 

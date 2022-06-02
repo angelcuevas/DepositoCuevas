@@ -69,7 +69,7 @@ namespace DepositoServicesLibrary.Controllers
             UbicacionEstadoActual result = new UbicacionEstadoActual();
 
             UbicacionDTO ubicacionDTO = getUbicacionFromDB(ubicacion);
-            result.ubicacion = ubicacion;
+            result.Ubicacion = ubicacion;
             if(ubicacionDTO.EstadoActual != 0)
             {
                 result.estado = getEstadoById(ubicacionDTO.EstadoActual);
@@ -144,7 +144,7 @@ namespace DepositoServicesLibrary.Controllers
     
         public static UbicacionEstadoActual createNewStateFromOldOne(UbicacionEstadoActual estadoActual, MovimientoDTO movimiento, JuegoDTO juego, int cantidad)
         {
-            if (estadoActual.ubicacion.StateLess == 1)
+            if (estadoActual.Ubicacion.StateLess == 1)
             {
                 return estadoActual;
             }
@@ -163,8 +163,8 @@ namespace DepositoServicesLibrary.Controllers
 
             nuevoJuegoCantidad.Id = juegoCantidadDataAccess.save(nuevoJuegoCantidad);
 
-            estadoActual.ubicacion.EstadoActual = nuevoEstado.Id;
-            ubicacionDataAccess.update(estadoActual.ubicacion, " id = @Id");
+            estadoActual.Ubicacion.EstadoActual = nuevoEstado.Id;
+            ubicacionDataAccess.update(estadoActual.Ubicacion, " id = @Id");
 
 
             estadoJuegoCantidadDataAccess.save(new UbicacionesEstadosJuegosDTO()
@@ -189,7 +189,7 @@ namespace DepositoServicesLibrary.Controllers
             });
 
 
-            return getUbicacionYEstadoActual(estadoActual.ubicacion);
+            return getUbicacionYEstadoActual(estadoActual.Ubicacion);
         }
 
         public static UbicacionesEstadosDTO createNewEstadoConFechaYHoraActual(UbicacionEstadoActual estadoActual, MovimientoDTO movimiento)
@@ -197,7 +197,7 @@ namespace DepositoServicesLibrary.Controllers
             UbicacionesEstadosDTO nuevoEstado = new UbicacionesEstadosDTO()
             {
                 Fecha = DateTime.Now.ToString(),
-                UbicacionId = estadoActual.ubicacion.Id,
+                UbicacionId = estadoActual.Ubicacion.Id,
                 MovimientoId = movimiento.Id
             };
 

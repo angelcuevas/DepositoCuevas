@@ -28,7 +28,12 @@ namespace DepositoClassLibrary.DTO
         {
             get
             {
-                return "E" + Estanteria +"-M" + Modulo + "-N" + Nivel+"-B"+Bancal;
+                if(Estanteria != null && Modulo != null && Nivel != null && Bancal != null)
+                {
+                    return "E" + Estanteria + "-M" + Modulo + "-N" + Nivel + "-B" + Bancal;
+                }
+
+                return "";
             }
         }
     }

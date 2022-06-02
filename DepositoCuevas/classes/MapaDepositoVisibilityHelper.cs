@@ -8,6 +8,13 @@ using System.Windows;
 
 namespace DepositoCuevas.classes
 {
+    public enum depositoMapaVistas
+    {
+        mapa,
+        estanteria,
+        contenido,
+        ingresoDeLinea
+    }
     public class MapaDepositoVisibilityHelper : INotifyPropertyChanged
     {
 
@@ -50,6 +57,22 @@ namespace DepositoCuevas.classes
             set { bancales = value; NotifyPropertyChanged("Bancales"); }
         }
 
+        private Visibility contenido = Visibility.Collapsed;
+
+        public Visibility Contenido
+        {
+            get { return contenido; }
+            set { contenido = value; NotifyPropertyChanged("Contenido"); }
+        }
+
+        private Visibility ingresoDeLinea = Visibility.Collapsed;
+
+        public Visibility IngresoDeLinea
+        {
+            get { return ingresoDeLinea; }
+            set { ingresoDeLinea = value; NotifyPropertyChanged("IngresoDeLinea"); }
+        }
+
         public void showMapa()
         {
             this.Mapa = Visibility.Visible;
@@ -71,6 +94,78 @@ namespace DepositoCuevas.classes
             this.Bancales = Visibility.Visible;
         }
 
+        private List<depositoMapaVistas> breadCrums = new List<depositoMapaVistas>();
+
+        public MapaDepositoVisibilityHelper()
+        {
+            breadCrums.Add(depositoMapaVistas.mapa);
+        }
+        
+        public void goToView(depositoMapaVistas vista)
+        {
+            breadCrums.Add(vista);
+            showLastOne();
+        }
+
+        public void goToPrevious()
+        {
+
+            if(breadCrums.Count == 1)
+            {
+                return;
+            }
+
+            hide(breadCrums[breadCrums.Count - 1]);
+            breadCrums.RemoveAt(breadCrums.Count - 1);
+            showLastOne();
+        }
+
+        private void showLastOne()
+        {
+            for (int i = 0; i < breadCrums.Count; i++)
+            {
+                if(i == breadCrums.Count - 1)
+                {
+                    show(breadCrums[i]);
+                }
+                else
+                {
+                    hide(breadCrums[i]);
+                }
+                
+            }
+        }
+
+        private void setVisibility(depositoMapaVistas vista, Visibility visibility)
+        {
+            switch (vista)
+            {
+                case depositoMapaVistas.mapa:
+                    Mapa = visibility;
+                    break;
+                case depositoMapaVistas.estanteria:
+                    Estanteria = visibility;
+                    break;
+                case depositoMapaVistas.contenido:
+                    Contenido = visibility;
+                    break;
+                case depositoMapaVistas.ingresoDeLinea:
+                    IngresoDeLinea = visibility;
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+        private void hide(depositoMapaVistas vista)
+        {
+            setVisibility(vista, Visibility.Collapsed);
+        }
+
+        private void show(depositoMapaVistas vista)
+        {
+            setVisibility(vista, Visibility.Visible);
+        }
 
     }
 }

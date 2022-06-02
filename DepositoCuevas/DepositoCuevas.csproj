@@ -199,6 +199,8 @@
     <Compile Include="viewmodels\Juegos\JuegosPageViewModel.cs" />
     <Compile Include="viewmodels\MainWindowViewModel.cs" />
     <Compile Include="viewmodels\MapaDepositoViewModel.cs" />
+    <Compile Include="viewmodels\MovimientoUbicacionVM.cs" />
+    <Compile Include="viewmodels\UbicacionContenidoVM.cs" />
     <Compile Include="views\common\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
     </Compile>
@@ -222,6 +224,12 @@
     </Compile>
     <Compile Include="views\SampleDialog.xaml.cs">
       <DependentUpon>SampleDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\ubicacion\IngresoDeLinea.xaml.cs">
+      <DependentUpon>IngresoDeLinea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\ubicacion\UbicacionContenidoView.xaml.cs">
+      <DependentUpon>UbicacionContenidoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\JuegoForm.xaml.cs">
       <DependentUpon>JuegoForm.xaml</DependentUpon>
@@ -271,6 +279,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\SampleDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\ubicacion\IngresoDeLinea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\ubicacion\UbicacionContenidoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -76,7 +76,7 @@ namespace DepositoCuevas.classes
                         OnHover.Invoke(ub);
                     }
                     , (string a) => {
-                        // OnClick.Invoke(moduloUbicacion);
+                        OnClick.Invoke(ub);
                     });
                     double bancalImageWidth = bancalWidth * 0.8;
                     double bancalImageHeigth = nivelHeight * 0.25;

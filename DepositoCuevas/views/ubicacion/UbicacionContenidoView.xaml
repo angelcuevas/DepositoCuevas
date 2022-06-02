@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="DepositoCuevas.views.ubicacion.UbicacionContenidoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DepositoCuevas.views.ubicacion"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ExportIconButton">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Export" Margin="10 0 10 0"/>
+                <TextBlock Text="{Binding}" FontSize="12" FontWeight="Bold" TextWrapping="Wrap"></TextBlock>
+                
+            </StackPanel>
+            
+        </DataTemplate>
+
+        <DataTemplate x:Key="ImportIconButton">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="PlusBox" Margin="10 0 10 0"/>
+                <TextBlock Text="{Binding}" FontSize="12" FontWeight="Bold" TextWrapping="Wrap"></TextBlock>
+
+            </StackPanel>
+
+        </DataTemplate>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="auto"/>
+            <RowDefinition  Height="auto"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"  >
+            <TextBlock.Text>
+                <MultiBinding StringFormat="Contenido de  {0}">
+                    <Binding Path="UbicacionDTO.Estado.Ubicacion.Descripcion"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+
+
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+            <Button
+                Margin="10"
+                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
+                ContentTemplate="{StaticResource ImportIconButton}"
+                Content="Ingresar Juegos desde línea"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Cursor="Hand" 
+                Command="{Binding RunExtendedDialogCommand}"
+                />
+
+            <Button
+                Margin="10"
+                Style="{StaticResource MaterialDesignOutlinedDarkButton}"
+                ToolTip="MaterialDesignOutlinedButton"
+                ContentTemplate="{StaticResource ExportIconButton}"
+                Content="Sacar Juegos"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Cursor="Hand" />
+
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <DataGrid
+                ItemsSource="{Binding Path = Estado.Cantidades}"
+                CanUserAddRows="False" AutoGenerateColumns="False"
+                HeadersVisibility="All"
+                FontSize="24"
+                IsReadOnly="true"
+                
+                 >
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn
+                        Binding="{Binding Path=JuegoCantidadDTO.Id}"
+                        Header="Id"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                    />
+
+                    <DataGridTextColumn
+                        Binding="{Binding Path=JuegoDTO.Codigo}"
+                        Header="Origen"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                    />
+                    <DataGridTextColumn
+                        Binding="{Binding Path=JuegoDTO.Descripcion}"
+                        Header="Destino"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                    />
+
+
+
+                    <DataGridTextColumn
+                        Binding="{Binding Path=JuegoCantidadDTO.Cantidad}"
+                        Header="Cantidad"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                    />
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+    </Grid>
+</UserControl>

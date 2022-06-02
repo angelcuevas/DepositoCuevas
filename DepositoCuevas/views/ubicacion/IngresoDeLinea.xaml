@@ -1,0 +1,189 @@
+﻿<UserControl x:Class="DepositoCuevas.views.ubicacion.IngresoDeLinea"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DepositoCuevas.views.ubicacion"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1"  Text="Movimiento" FontSize="30"/>
+        <TextBlock Grid.Row="1"  Text="{Binding Path=CodigoTextImput}"/>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0">
+                <TextBox
+                    Margin="10"
+                    x:Name="Codigo"
+                    FontSize="25"
+                    materialDesign:HintAssist.Hint="Código"
+                    materialDesign:HintAssist.HelperText="Código del juego" Cursor="Arrow">
+                   
+                    <TextBox.Text>
+                        <Binding Path="CodigoTextImput" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <!--<domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>-->
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding searchCodigoCommand}"/>
+                        <KeyBinding Key="Tab" Command="{Binding searchCodigoCommand}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <TextBox
+                    Margin="10"
+                    x:Name="Descripcion"
+                    FontSize="25"
+                    materialDesign:HintAssist.Hint="Descripción del Juego"
+                    materialDesign:HintAssist.HelperText="Descripción del Juego" Cursor="Arrow"
+                    IsEnabled="False">
+                    
+                    <TextBox.Text>
+                        <Binding Path="JuegoBuscado.Descripcion" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <!--<domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>-->
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBox
+                    Margin="10"
+                    x:Name="Cantidad"
+                    FontSize="25"
+                    materialDesign:HintAssist.Hint="Cantidad"
+                    materialDesign:HintAssist.HelperText="Cantidad" Cursor="Arrow"
+                    IsEnabled="true">
+
+                    <TextBox.Text>
+                        <Binding Path="Cantidad" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <!--<domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"/>-->
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+
+            <Button
+                Margin="10 0 10 0"
+                Grid.Column="3"
+                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
+                Content="Agregar a movimiento"
+                Command="{Binding addToListCommand}"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Cursor="Hand" />
+
+            <Button
+                Margin="10 0 10 0"
+                Grid.Column="4"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                ToolTip="MaterialDesignFloatingActionMiniLightButton"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Cursor="Hand">
+                            <materialDesign:PackIcon
+                Kind="Close"
+                Height="25"
+                Width="25" />
+            </Button>
+
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <!--<Grid.RowDefinitions >
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>-->
+            <DataGrid 
+                ItemsSource="{Binding Path = ListaDeJuegos}"
+                CanUserAddRows="False" AutoGenerateColumns="False"
+                HeadersVisibility="All"
+                FontSize="24"
+                IsReadOnly="true"
+                
+                 >
+                <DataGrid.Columns>
+
+
+                    <DataGridTextColumn
+                        Binding="{Binding Path=JuegoDTO.Codigo}"
+                        Header="Código"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                    />
+                    <DataGridTextColumn
+                        Binding="{Binding Path=JuegoDTO.Descripcion}"
+                        Header="Descripción"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                    />
+
+
+
+                    <DataGridTextColumn
+                        Binding="{Binding Path=JuegoCantidadDTO.Cantidad}"
+                        Header="Cantidad"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                    />
+                    <DataGridTemplateColumn
+                                Header="Borrar"
+                                >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                Margin="10 0 10 0"
+                                Grid.Column="4"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                ToolTip="MaterialDesignFloatingActionMiniLightButton"
+                                Command="{Binding Path= DataContext.eliminarDeListaCommand ,RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                                CommandParameter="{Binding}"
+                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Cursor="Hand">
+                                    <materialDesign:PackIcon
+                                Kind="Close"
+                                Height="25"
+                                Width="25" 
+
+                                        />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+
+        </Grid>
+        <Button Grid.Row="4"
+              Margin="20"
+              Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}"
+              ToolTip="Resource name: MaterialDesignRaisedSecondaryLightButton"
+              Content="Ingresar"
+              Command="{Binding guardarMovimientoCommand}"
+              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Cursor="Hand" />
+    </Grid>
+</UserControl>

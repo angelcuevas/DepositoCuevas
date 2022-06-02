@@ -52,9 +52,9 @@ namespace DepositoCuevas.classes
                         differentColorOnHover = true
                 }, (string a) =>{
                         OnHover.Invoke(moduloUbicacion);
-                    }
+                }
                 , (string a) => {
-                    OnClick.Invoke(moduloUbicacion);
+                        OnClick.Invoke(moduloUbicacion);
                 });
             }
 

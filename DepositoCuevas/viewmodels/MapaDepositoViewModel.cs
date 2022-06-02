@@ -1,5 +1,7 @@
-﻿using DepositoClassLibrary.DTO;
+﻿using DepositoClassLibrary.deposito;
+using DepositoClassLibrary.DTO;
 using DepositoCuevas.classes;
+using DepositoCuevas.Commands;
 using DepositoCuevas.viewmodels.helpers;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -19,6 +23,25 @@ namespace DepositoCuevas.viewmodels
         private Canvas estanteriaCanvas;
         private DepositoMedidasHelper medidasHelper;
         private CanvasHelper canvasHelper;
+
+
+        private MovimientoUbicacionVM movUbicacionVM;
+
+        public MovimientoUbicacionVM MovUbicacionVM
+        {
+            get { return movUbicacionVM; }
+            set { movUbicacionVM = value; NotifyPropertyChanged("MovUbicacionVM"); }
+        }
+        
+
+        private UbicacionContenidoVM ubicacionContenido;
+
+        public UbicacionContenidoVM UbicacionContenido
+        {
+            get { return ubicacionContenido; }
+            set { ubicacionContenido = value; NotifyPropertyChanged("UbicacionContenido"); }
+        }
+
 
         private MapaDepositoTextHelper textHelper = new MapaDepositoTextHelper();
         public MapaDepositoTextHelper TextHelper
@@ -121,15 +144,20 @@ namespace DepositoCuevas.viewmodels
 
         private void showVistaEstanteria(ModuloUbicacion ubicacion)
         {
-            visibilityHelper.showEstanteria();
+            //visibilityHelper.showEstanteria();
+            visibilityHelper.goToView(depositoMapaVistas.estanteria);
             drawEstanteriaView(ubicacion);
 
         }
 
         private void drawEstanteriaView(ModuloUbicacion ubicacion)
         {
+            TextBlock text = (TextBlock)estanteriaCanvas.Children[0];
+            estanteriaCanvas.Children.Clear();
+            estanteriaCanvas.Children.Add(text);
             EstanteriaViewVisualHandler handler = new EstanteriaViewVisualHandler(ubicacion, estanteriaCanvas, medidasHelper);
             handler.OnHover += handlerBancalHover;
+            handler.OnClick += handlerBancalClick;
         }
 
         private void handlerBancalHover(UbicacionDTO ubicacion)
@@ -142,6 +170,31 @@ namespace DepositoCuevas.viewmodels
 
             textHelper.BancalHoverDescripcion = sb.ToString();
         }
+
+        private void handlerBancalClick(UbicacionDTO ubicacion)
+        {
+            UbicacionContenido= new UbicacionContenidoVM(ubicacion);
+            UbicacionContenido.onIngresarClicked += handleIngresarClicked;
+            visibilityHelper.goToView(depositoMapaVistas.contenido);
+        }
+
+        private void handleIngresarClicked(UbicacionEstadoActual estado)
+        {
+            visibilityHelper.goToView(depositoMapaVistas.ingresoDeLinea);
+            MovUbicacionVM = new MovimientoUbicacionVM();
+        }
+
+        public AnotherCommandImplementation MovePrevCommand
+        {
+            get
+            {
+                return new AnotherCommandImplementation(_ =>
+                {
+                    VisibilityHelper.goToPrevious();
+                });
+            }
+        }
+
 
 
     }

@@ -5,10 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DepositoCuevas.views"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="500">
+             d:DesignHeight="500" d:DesignWidth="500"
+             
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:juegos="clr-namespace:DepositoCuevas.views.Juegos" xmlns:ubicacion="clr-namespace:DepositoCuevas.views.ubicacion"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal" 
+            TextOptions.TextRenderingMode="Auto"        
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
+             >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -29,8 +40,19 @@
             
         </Grid>
 
+        <Button
+            Grid.Row="1"
+            HorizontalAlignment="Left"
+            Margin="24,0,0,0"
+            ToolTip="Previous Item"
+            Command="{Binding MovePrevCommand}"
+            Content="{materialDesign:PackIcon Kind=ArrowLeft, Size=24}"
+            Style="{StaticResource MaterialDesignToolButton}"
+            Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
+            materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"/>
 
-        <Viewbox Grid.Row="2" Stretch="Uniform" Visibility="{Binding Path=VisibilityHelper.Mapa}">
+
+        <Viewbox Grid.Row="3" Stretch="Uniform" Visibility="{Binding Path=VisibilityHelper.Mapa}">
             <Viewbox.RenderTransform>
                 <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
             </Viewbox.RenderTransform>
@@ -44,7 +66,7 @@
                 
         </Viewbox>
 
-        <Viewbox  Grid.Row="2" Stretch="Uniform" Visibility="{Binding Path=VisibilityHelper.Estanteria}">
+        <Viewbox  Grid.Row="3" Stretch="Uniform" Visibility="{Binding Path=VisibilityHelper.Estanteria}">
             <Viewbox.RenderTransform>
                 <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
             </Viewbox.RenderTransform>
@@ -58,6 +80,8 @@
 
         </Viewbox>
 
+        <ubicacion:UbicacionContenidoView Grid.Row="3" DataContext="{Binding UbicacionContenido}" Visibility="{Binding DataContext.VisibilityHelper.Contenido, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"/>
+        <ubicacion:IngresoDeLinea Grid.Row="3" DataContext="{Binding Path=MovUbicacionVM}" Visibility="{Binding DataContext.VisibilityHelper.IngresoDeLinea, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"/>
 
 
     </Grid>
